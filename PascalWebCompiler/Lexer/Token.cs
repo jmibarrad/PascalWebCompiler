@@ -1,0 +1,82 @@
+﻿namespace PascalWebCompiler.Lexer
+{
+    public enum TokenType
+    {
+        EOF,
+        EOS,
+        NUMBER_LITERAL,
+        STRING_LITERAL,
+        ID,
+        SUM,
+        SUB,
+        MULT,
+        DIV,
+        MOD,
+        EQUAL,
+        NOT_EQUAL,
+        GREATER_THAN,
+        LESS_THAN,
+        GREATER_EQUAL,
+        LESS_EQUAL,
+        KW_INTEGER,
+        KW_BOOLEAN,
+        KW_REAL,
+        KW_CHAR,
+        KW_STRING,
+        KW_ARRAY,
+        KW_SET,
+        KW_AND,
+        KW_OR,
+        KW_NOT,
+        KW_BEGIN,
+        KW_END,
+        KW_PROGRAM,
+        KW_FUNCTION,
+        KW_PROCEDURE,
+        KW_WHILE,
+        KW_FOR,
+        KW_DO,
+        KW_CASE,
+        KW_OF,
+        KW_IF,
+        KW_THEN,
+        KW_ELSE,
+        KW_UNTIL,
+        KW_NIL,
+        KW_IN,
+        KW_CONST,
+        TK_RIGHTPARENTHESIS,
+        TK_LEFTPARENTHESIS,
+        TK_RIGHTBRACKET,
+        TK_LEFTBRACKET,
+        TK_ASSIGN,
+        TK_RANGE,
+        TK_ACCESS,
+        TK_RIGHTBRACES,
+        TK_LEFTBRACES,
+        TK_MULTIPLERIGHTBRACES,
+        TK_MULTIPLELEFTBRACES,
+        HEX,
+        BIN,
+        OCTAL,
+        KW_RECORD,
+        KW_VAR,
+        KW_TYPE,
+        TK_REALDIVISION,
+        HTML,
+        TK_COMMA,
+        TK_PERIOD,
+        TK_COLON,
+        KW_REPEAT,
+        CHAR_LITERAL,
+        DOUBLE
+    }
+
+    public class Token
+    {
+        public TokenType Type { set; get; }
+        public string Lexeme { set; get; }
+        public int Column { set; get; }
+        public int Row { set; get; }
+    }
+}
