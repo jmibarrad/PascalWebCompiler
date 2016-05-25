@@ -49,14 +49,6 @@ namespace PascalWebCompiler.Syntactic
             {
                 _currentToken = _lexer.GetNextToken();
                 If();
-                if (_currentToken.Type == TokenType.EOS)
-                {
-                    _currentToken = _lexer.GetNextToken();
-                }
-                else
-                {
-                    throw new SyntaxException($"Unexpected Sentence Token: {_currentToken.Lexeme} Expected ';' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
-                }
             }
             else if (_currentToken.Type == TokenType.KW_FOR)
             {
@@ -281,8 +273,9 @@ namespace PascalWebCompiler.Syntactic
             PascalExpression();
             if (_currentToken.Type == TokenType.KW_THEN)
             {
-                Block();
                 _currentToken = _lexer.GetNextToken();
+                Block();
+                //_currentToken = _lexer.GetNextToken();
                 if (_currentToken.Type == TokenType.KW_ELSE)
                 {
                     Else();
@@ -297,12 +290,12 @@ namespace PascalWebCompiler.Syntactic
 
         private void Else()
         {
+            _currentToken = _lexer.GetNextToken();
             Block();
         }
 
         private void Block()
         {
-            _currentToken = _lexer.GetNextToken();
             if (_currentToken.Type == TokenType.KW_BEGIN)
             {
                 SentenceList();
@@ -438,8 +431,11 @@ namespace PascalWebCompiler.Syntactic
             {
                 _currentToken = _lexer.GetNextToken();
                 CallFunction();
-                //_currentToken = _lexer.GetNextToken();
-                if (_currentToken.Type != TokenType.TK_RIGHTPARENTHESIS)
+                if (_currentToken.Type == TokenType.TK_RIGHTPARENTHESIS)
+                {
+                    _currentToken = _lexer.GetNextToken();
+                }
+                else
                 {
                     throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: ')' Column: {_currentToken.Column} Row: {_currentToken.Row}");
                 }
@@ -682,6 +678,27 @@ namespace PascalWebCompiler.Syntactic
             {
                 _currentToken = _lexer.GetNextToken();
             }
+            else if (_currentToken.Type == TokenType.KW_NOT)
+            {
+                _currentToken = _lexer.GetNextToken();
+                Factor();
+            }
+            else if (_currentToken.Type == TokenType.HEX)
+            {
+                _currentToken = _lexer.GetNextToken();
+            }
+            else if (_currentToken.Type == TokenType.BIN)
+            {
+                _currentToken = _lexer.GetNextToken();
+            }
+            else if (_currentToken.Type == TokenType.OCTAL)
+            {
+                _currentToken = _lexer.GetNextToken();
+            }
+            else if (_currentToken.Type == TokenType.DOUBLE)
+            {
+                _currentToken = _lexer.GetNextToken();
+            }
             else if (_currentToken.Type == TokenType.ID)
             {
                 _currentToken = _lexer.GetNextToken();
@@ -689,14 +706,23 @@ namespace PascalWebCompiler.Syntactic
                 {
                     _currentToken = _lexer.GetNextToken();
                     CallFunction();
+                    _currentToken = _lexer.GetNextToken();
+                    if (_currentToken.Type == TokenType.TK_RIGHTPARENTHESIS)
+                    {
+                        _currentToken = _lexer.GetNextToken();
+                    }
+                    else
+                    {
+                        throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected ')' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                    }
                 }
-                _currentToken = _lexer.GetNextToken();
 
             }
             else if (_currentToken.Type == TokenType.TK_LEFTPARENTHESIS)
             {
                 _currentToken = _lexer.GetNextToken();
                 PascalExpression();
+                //_currentToken = _lexer.GetNextToken();
                 if (_currentToken.Type != TokenType.TK_RIGHTPARENTHESIS)
                 {
                     throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected ')' at Column: {_currentToken.Column} Row: {_currentToken.Row}");

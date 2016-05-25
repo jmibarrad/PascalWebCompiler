@@ -14,13 +14,23 @@ Scenario: Declare a native type variable and assign it
 	When We Parse
 	Then the result should pass
 
-Scenario: Declare a constant variable without type
+Scenario: Declare a constant variable with type
 	Given the following source code '<%const r : integer = 12;%>'
 	When We Parse
 	Then the result should pass
 
-Scenario: Declare a constant variable with type
+Scenario: Declare a constant variable without type
 	Given the following source code '<%const r = 12;%>'
+	When We Parse
+	Then the result should pass
+
+Scenario: Initialize a variable with an expression
+	Given the following source code '<%var x : Integer = (2+3*4);%>'
+	When We Parse
+	Then the result should pass
+
+Scenario: Declare an if else condition
+	Given the following source code '<%if (a = 10)  then writeln('Value of a is 10' );	else if ( a = 20 ) then writeln('Value of a is 20' );%>'
 	When We Parse
 	Then the result should pass
 
