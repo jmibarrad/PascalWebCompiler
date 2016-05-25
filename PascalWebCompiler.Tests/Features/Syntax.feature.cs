@@ -107,18 +107,54 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Declare a constant variable without type")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Syntax")]
+        public virtual void DeclareAConstantVariableWithoutType()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Declare a constant variable without type", ((string[])(null)));
+#line 17
+this.ScenarioSetup(scenarioInfo);
+#line 18
+ testRunner.Given("the following source code \'<%const r : integer = 12;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 19
+ testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 20
+ testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Declare a constant variable with type")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Syntax")]
+        public virtual void DeclareAConstantVariableWithType()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Declare a constant variable with type", ((string[])(null)));
+#line 22
+this.ScenarioSetup(scenarioInfo);
+#line 23
+ testRunner.Given("the following source code \'<%const r = 12;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 24
+ testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 25
+ testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Declaring a native type variable with initial value")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Syntax")]
         public virtual void DeclaringANativeTypeVariableWithInitialValue()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Declaring a native type variable with initial value", ((string[])(null)));
-#line 17
+#line 27
 this.ScenarioSetup(scenarioInfo);
-#line 18
+#line 28
  testRunner.Given("the following source code \'<%type myArray = array [a..b] of integer;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 19
+#line 29
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 20
+#line 30
  testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -130,13 +166,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void DeclareAListOfVariablesWithoutInitializing()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Declare a list of variables without initializing", ((string[])(null)));
-#line 22
+#line 32
 this.ScenarioSetup(scenarioInfo);
-#line 23
+#line 33
  testRunner.Given("the following source code \'<% var x, y, z : Integer; %>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 24
+#line 34
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 25
+#line 35
  testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -148,13 +184,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void CallingAFunction()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Calling a function", ((string[])(null)));
-#line 27
+#line 37
 this.ScenarioSetup(scenarioInfo);
-#line 28
+#line 38
  testRunner.Given("the following source code \'<%Add(Sum, Sum, Sum);%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 29
+#line 39
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 30
+#line 40
  testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -166,13 +202,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void DeclareAnEnumeratedType()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Declare an enumerated type", ((string[])(null)));
-#line 32
+#line 42
 this.ScenarioSetup(scenarioInfo);
-#line 33
+#line 43
  testRunner.Given("the following source code \'<%type weekend = (Friday, Saturday, Sunday);%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 34
+#line 44
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 35
+#line 45
  testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -184,13 +220,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void DeclareAnEnumeratedTypeWithError()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Declare an enumerated type with Error", ((string[])(null)));
-#line 37
+#line 47
 this.ScenarioSetup(scenarioInfo);
-#line 38
+#line 48
  testRunner.Given("the following source code \'<%type weekend = (Friday, Saturday, Sunday;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 39
+#line 49
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 40
+#line 50
  testRunner.Then("the result should fail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -202,13 +238,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void DeclareARecord()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Declare a record", ((string[])(null)));
-#line 42
+#line 52
 this.ScenarioSetup(scenarioInfo);
-#line 43
+#line 53
  testRunner.Given("the following source code \'type rec = record begin x:integer end;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 44
+#line 54
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 45
+#line 55
  testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -220,14 +256,14 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void DeclareABidemensionalArray()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Declare a bidemensional array", ((string[])(null)));
-#line 47
+#line 57
 this.ScenarioSetup(scenarioInfo);
-#line 48
- testRunner.Given("the following source code \'<%type array = array [1..3] of array [1..5] of integer" +
-                    ";%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 49
+#line 58
+ testRunner.Given("the following source code \'<%type array2 = array [1..3] of array [1..5] of intege" +
+                    "r;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 59
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 50
+#line 60
  testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -239,13 +275,14 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void DeclareABidemensionalArray2()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Declare a bidemensional array #2", ((string[])(null)));
-#line 52
+#line 62
 this.ScenarioSetup(scenarioInfo);
-#line 53
- testRunner.Given("the following source code \'<%type array = array [1..3,1..5] of integer;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 54
+#line 63
+ testRunner.Given("the following source code \'<%type simpleintegerarray = array [4..33, 34..99] of i" +
+                    "nteger;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 64
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 55
+#line 65
  testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -257,15 +294,15 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void DeclareACase()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Declare a case", ((string[])(null)));
-#line 57
+#line 67
 this.ScenarioSetup(scenarioInfo);
-#line 58
+#line 68
  testRunner.Given("the following source code \'<%case c of 1..4 : s := \'lowercase letter (a-z)\'; 1+10" +
                     "0..4+100 : s := \'lowercase letter (a-z)\'; a.. b : s := \'lowercase letter (a-z)\';" +
                     "\t400: s := \'400 case\'; end; %>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 59
+#line 69
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 60
+#line 70
  testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -277,14 +314,14 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void AWhileSentence()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A while sentence", ((string[])(null)));
-#line 62
+#line 72
 this.ScenarioSetup(scenarioInfo);
-#line 63
+#line 73
  testRunner.Given("the following source code \'<%while a < 6 do begin writeln (a); a := a + 1 end;%>\'" +
                     "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 64
+#line 74
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 65
+#line 75
  testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -296,14 +333,14 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void AFunctionDeclaration()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A function declaration", ((string[])(null)));
-#line 67
+#line 77
 this.ScenarioSetup(scenarioInfo);
-#line 68
+#line 78
  testRunner.Given("the following source code \'<%function CircleArea(var radius, r1, r2: Integer): In" +
                     "teger; var area: Integer; begin end;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 69
+#line 79
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 70
+#line 80
  testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -315,14 +352,14 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void AForSentence()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A for sentence", ((string[])(null)));
-#line 72
+#line 82
 this.ScenarioSetup(scenarioInfo);
-#line 73
+#line 83
  testRunner.Given("the following source code \'<%for count := 1 to 100 do begin sum := sum + count; i" +
                     "f sum = 38 then break; end;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 74
+#line 84
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 75
+#line 85
  testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -334,14 +371,14 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void AProcedureDeclaration()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A procedure declaration", ((string[])(null)));
-#line 77
+#line 87
 this.ScenarioSetup(scenarioInfo);
-#line 78
+#line 88
  testRunner.Given("the following source code \'<%procedure swap(var c1,c2:char); var c:char; begin c:" +
                     "=c1; c1:=c2; c2:=c; end;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 79
+#line 89
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 80
+#line 90
  testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

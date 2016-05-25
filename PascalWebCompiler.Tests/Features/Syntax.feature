@@ -14,6 +14,16 @@ Scenario: Declare a native type variable and assign it
 	When We Parse
 	Then the result should pass
 
+Scenario: Declare a constant variable without type
+	Given the following source code '<%const r : integer = 12;%>'
+	When We Parse
+	Then the result should pass
+
+Scenario: Declare a constant variable with type
+	Given the following source code '<%const r = 12;%>'
+	When We Parse
+	Then the result should pass
+
 Scenario: Declaring a native type variable with initial value
 	Given the following source code '<%type myArray = array [a..b] of integer;%>'
 	When We Parse
@@ -45,12 +55,12 @@ Scenario:Declare a record
 	Then the result should pass
 
 Scenario:Declare a bidemensional array 
-	Given the following source code '<%type array = array [1..3] of array [1..5] of integer;%>'
+	Given the following source code '<%type array2 = array [1..3] of array [1..5] of integer;%>'
 	When We Parse
 	Then the result should pass
 
 Scenario:Declare a bidemensional array #2
-	Given the following source code '<%type array = array [1..3,1..5] of integer;%>'
+	Given the following source code '<%type simpleintegerarray = array [4..33, 34..99] of integer;%>'
 	When We Parse
 	Then the result should pass
 

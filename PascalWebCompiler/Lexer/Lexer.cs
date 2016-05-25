@@ -67,7 +67,7 @@ namespace PascalWebCompiler.Lexer
                             _currentSymbol = Content.NextSymbol();
                             state = 5;
                         }
-                        else if (_currentSymbol.CurrentSymbol == '\"')
+                        else if (_currentSymbol.CurrentSymbol == '\'')
                         {
                             state = 3;
                             tokenColumn = _currentSymbol.Column;
@@ -188,12 +188,12 @@ namespace PascalWebCompiler.Lexer
                         }
                         break;
                     case 3:
-                        if (_currentSymbol.CurrentSymbol != '\"')
+                        if (_currentSymbol.CurrentSymbol != '\'')
                         {
                             lexeme += _currentSymbol.CurrentSymbol;
                             _currentSymbol = Content.NextSymbol();
                         }
-                        else if (_currentSymbol.CurrentSymbol == '\"')
+                        else if (_currentSymbol.CurrentSymbol == '\'')
                         {
                             lexeme += _currentSymbol.CurrentSymbol;
                             _currentSymbol = Content.NextSymbol();

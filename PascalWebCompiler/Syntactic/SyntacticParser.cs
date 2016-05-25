@@ -176,7 +176,50 @@ namespace PascalWebCompiler.Syntactic
 
         private void Const()
         {
-            throw new System.NotImplementedException();
+            if (_currentToken.Type == TokenType.ID)
+            {
+                _currentToken = _lexer.GetNextToken();
+                ConstantDeclaration();
+            }
+            else
+            {
+                throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: ID at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+            }
+        }
+
+        private void ConstantDeclaration()
+        {
+            if (_currentToken.Type == TokenType.EQUAL)
+            {
+                _currentToken = _lexer.GetNextToken();
+                PascalExpression();
+            }
+            else if (_currentToken.Type == TokenType.TK_COLON)
+            {
+                _currentToken = _lexer.GetNextToken();
+                if (_currentToken.Type == TokenType.ID)
+                {
+                    _currentToken = _lexer.GetNextToken();
+                    if (_currentToken.Type == TokenType.EQUAL)
+                    {
+                        _currentToken = _lexer.GetNextToken();
+                        PascalExpression();
+                    }
+                    else
+                    {
+                        throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: '=' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                    }
+                }
+                else
+                {
+                    throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: ID at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                }
+
+            }
+            else
+            {
+                throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: '=' or ':' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+            }
         }
 
         public void Declaration()
@@ -460,8 +503,101 @@ namespace PascalWebCompiler.Syntactic
 
         public void Array()
         {
-            _currentToken = _lexer.GetNextToken();
+            if (_currentToken.Type == TokenType.TK_LEFTBRACKET)
+            {
+                _currentToken = _lexer.GetNextToken();
+                RangeList();
+                if (_currentToken.Type == TokenType.TK_RIGHTBRACKET)
+                {
+                    _currentToken = _lexer.GetNextToken();
+                    if (_currentToken.Type == TokenType.KW_OF)
+                    {
+                        _currentToken = _lexer.GetNextToken();
+                        ArrayTypes();
+                    }
+                    else
+                    {
+                        throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: 'of' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                    }
+                }
+                else
+                {
+                    throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: ']' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                }
+            }
+            else
+            {
+                throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: ID at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+            }
+        }
 
+        private void ArrayTypes()
+        {
+            if (_currentToken.Type == TokenType.ID)
+            {
+                _currentToken = _lexer.GetNextToken();
+            }
+            else if (_currentToken.Type == TokenType.KW_ARRAY)
+            {
+                _currentToken = _lexer.GetNextToken();
+                Array();
+            }
+            else 
+            {
+                _currentToken = _lexer.GetNextToken();
+                Range();
+            }
+            //else
+            //{
+            //    throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: ID at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+            //}
+        }
+
+        private void RangeList()
+        {
+            Range();
+            OptionalRangeList();
+        }
+
+        private void Range()
+        {
+            if (_currentToken.Type == TokenType.ID)
+            {
+                _currentToken = _lexer.GetNextToken();
+            }
+            else
+            {
+                SubRange();
+                if (_currentToken.Type == TokenType.ID)
+                {
+                    _currentToken = _lexer.GetNextToken();
+                }
+            }
+        }
+
+        private void SubRange()
+        {
+
+            PascalExpression();
+            if (_currentToken.Type == TokenType.TK_RANGE)
+            {
+                _currentToken = _lexer.GetNextToken();
+                PascalExpression();
+            }
+            else
+            {
+                throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: '..' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+            }
+
+        }
+
+        private void OptionalRangeList()
+        {
+            if (_currentToken.Type == TokenType.TK_COMMA)
+            {
+                _currentToken = _lexer.GetNextToken();
+                RangeList();
+            }
         }
 
         public void ListaId()

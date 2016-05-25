@@ -366,7 +366,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 74
  this.ScenarioSetup(scenarioInfo);
 #line 75
- testRunner.Given("I have an input of \'<%\"integer num\"\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have an input of \'<%\'integer num\'\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 76
  testRunner.When("We Tokenize", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
@@ -377,7 +377,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Row"});
             table9.AddRow(new string[] {
                         "STRING_LITERAL",
-                        "\"integer num\"",
+                        "\'integer num\'",
                         "2",
                         "0"});
             table9.AddRow(new string[] {
@@ -772,7 +772,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 166
 this.ScenarioSetup(scenarioInfo);
 #line 167
- testRunner.Given("I have an input of \'<%\"ham\" < \"tam\" and or not \"tam\" > \"ham\"\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have an input of \'<%\'ham\' < \'tam\' and or not \'tam\' > \'ham\'\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 168
  testRunner.When("We Tokenize", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
@@ -783,7 +783,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Row"});
             table18.AddRow(new string[] {
                         "STRING_LITERAL",
-                        "\"ham\"",
+                        "\'ham\'",
                         "2",
                         "0"});
             table18.AddRow(new string[] {
@@ -793,7 +793,7 @@ this.ScenarioSetup(scenarioInfo);
                         "0"});
             table18.AddRow(new string[] {
                         "STRING_LITERAL",
-                        "\"tam\"",
+                        "\'tam\'",
                         "10",
                         "0"});
             table18.AddRow(new string[] {
@@ -813,7 +813,7 @@ this.ScenarioSetup(scenarioInfo);
                         "0"});
             table18.AddRow(new string[] {
                         "STRING_LITERAL",
-                        "\"tam\"",
+                        "\'tam\'",
                         "27",
                         "0"});
             table18.AddRow(new string[] {
@@ -823,7 +823,7 @@ this.ScenarioSetup(scenarioInfo);
                         "0"});
             table18.AddRow(new string[] {
                         "STRING_LITERAL",
-                        "\"ham\"",
+                        "\'ham\'",
                         "35",
                         "0"});
             table18.AddRow(new string[] {

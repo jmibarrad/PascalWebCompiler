@@ -72,11 +72,11 @@ Scenario: Input is an id a2042
 		| EOF				| $	       |   14	| 0   |
 
  Scenario: Input is a String Literal
-	Given I have an input of '<%"integer num"'
+	Given I have an input of '<%'integer num''
 	When We Tokenize
 	Then the result should be 
 		| Type				| Lexeme		| Column | Row |
-		| STRING_LITERAL	| "integer num" |   2    | 0   |
+		| STRING_LITERAL	| 'integer num' |   2    | 0   |
 		| EOF				| $				|   15	 | 0   |
 
 Scenario: Input is a hexadecimal Number
@@ -164,19 +164,19 @@ Scenario: Input is an assigned array
 		| EOF				| $				|   37	 | 0   |
 
 Scenario: Input is relational operators 
-	Given I have an input of '<%"ham" < "tam" and or not "tam" > "ham"'
+	Given I have an input of '<%'ham' < 'tam' and or not 'tam' > 'ham''
 	When We Tokenize
 	Then the result should be 
 		| Type				| Lexeme		| Column | Row |
-		| STRING_LITERAL	| "ham"			|   2    | 0   |
+		| STRING_LITERAL	| 'ham'			|   2    | 0   |
 		| LESS_THAN			| <				|   8	 | 0   |
-		| STRING_LITERAL	| "tam"			|   10	 | 0   |
+		| STRING_LITERAL	| 'tam'			|   10	 | 0   |
 		| KW_AND			| and			|   16	 | 0   |
 		| KW_OR				| or			|   20	 | 0   |
 		| KW_NOT			| not			|   23	 | 0   |
-		| STRING_LITERAL	| "tam"			|   27   | 0   |
+		| STRING_LITERAL	| 'tam'			|   27   | 0   |
 		| GREATER_THAN			| >			|   33	 | 0   |
-		| STRING_LITERAL	| "ham"			|   35	 | 0   |
+		| STRING_LITERAL	| 'ham'			|   35	 | 0   |
 		| EOF				| $				|   40	 | 0   |
 
 
