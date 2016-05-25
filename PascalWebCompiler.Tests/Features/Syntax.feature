@@ -9,13 +9,18 @@ Scenario: Declare a native type variable
 	When We Parse
 	Then the result should pass
 
+Scenario: Declare a native type variable and assign it
+	Given the following source code '<%var x : Integer = 2;%>'
+	When We Parse
+	Then the result should pass
+
 Scenario: Declaring a native type variable with initial value
 	Given the following source code '<%type myArray = array [a..b] of integer;%>'
 	When We Parse
 	Then the result should pass
 
 Scenario: Declare a list of variables without initializing
-	GivenI have the following source code '<%var x, y, z : Integer;%>'
+	Given the following source code '<% var x, y, z : Integer; %>'
 	When We Parse
 	Then the result should pass 
 

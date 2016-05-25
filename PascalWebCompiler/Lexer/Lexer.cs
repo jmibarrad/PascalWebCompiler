@@ -215,13 +215,7 @@ namespace PascalWebCompiler.Lexer
                         }
                         else
                         {
-                            return new Token
-                            {
-                                Type = TokenType.HEX,
-                                Lexeme = lexeme,
-                                Column = tokenColumn,
-                                Row = tokenRow
-                            };
+                            return new Token { Type = TokenType.HEX, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
                         }
                        
                         break;
@@ -240,7 +234,6 @@ namespace PascalWebCompiler.Lexer
                             tokenRow = _currentSymbol.Row;
                             state = 23;
                             _pascalCode = false;
-                            //return new Token { Type = TokenType.TK_ENDPASCAL, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
                         }
                         break;
                     case 9:
@@ -328,7 +321,6 @@ namespace PascalWebCompiler.Lexer
                             lexeme += _currentSymbol.CurrentSymbol;
                             _currentSymbol = Content.NextSymbol();
                             state = 0;
-                            //return new Token { Type = TokenType.TK_COMMENT, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
                         }
                         else if (_currentSymbol.CurrentSymbol == '\0')
                         {
@@ -389,7 +381,6 @@ namespace PascalWebCompiler.Lexer
                             lexeme += _currentSymbol.CurrentSymbol;
                             _currentSymbol = Content.NextSymbol();
                             state = 0;
-                            //return new Token { Type = TokenType.TK_COMMENT, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
                         }
                         else if (_currentSymbol.CurrentSymbol == '\0')
                         {
