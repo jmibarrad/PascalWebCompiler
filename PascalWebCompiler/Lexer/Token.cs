@@ -69,7 +69,10 @@
         TK_COLON,
         KW_REPEAT,
         CHAR_LITERAL,
-        DOUBLE
+        REAL_LITERAL,
+        KW_TO,
+        KW_BREAK,
+        KW_CONTINUE
     }
 
     public class Token

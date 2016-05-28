@@ -169,10 +169,11 @@ namespace PascalWebCompiler.Lexer
                         }
                         else
                         {
-                            if (KeyWords.KwMap.ContainsKey(lexeme))
-                                return new Token { Type = KeyWords.KwMap[lexeme.ToLower()], Lexeme = lexeme.ToLower(), Column = tokenColumn, Row = tokenRow };
-                            
-                            return new Token { Type = TokenType.ID, Lexeme = lexeme.ToLower(), Column = tokenColumn, Row = tokenRow };
+                            lexeme = lexeme.ToLower();
+                            if (KeyWords.KwMap.ContainsKey(lexeme)) { 
+                                return new Token { Type = KeyWords.KwMap[lexeme], Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
+                            }
+                            return new Token { Type = TokenType.ID, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
                         }
                         break;
                     case 2:
@@ -321,6 +322,7 @@ namespace PascalWebCompiler.Lexer
                             lexeme += _currentSymbol.CurrentSymbol;
                             _currentSymbol = Content.NextSymbol();
                             state = 0;
+                            lexeme = string.Empty;
                         }
                         else if (_currentSymbol.CurrentSymbol == '\0')
                         {
@@ -381,6 +383,7 @@ namespace PascalWebCompiler.Lexer
                             lexeme += _currentSymbol.CurrentSymbol;
                             _currentSymbol = Content.NextSymbol();
                             state = 0;
+                            lexeme = string.Empty;
                         }
                         else if (_currentSymbol.CurrentSymbol == '\0')
                         {
@@ -408,6 +411,7 @@ namespace PascalWebCompiler.Lexer
                     case 21:
                         if (_currentSymbol.CurrentSymbol.Equals('\n') || _currentSymbol.CurrentSymbol.Equals('\0'))
                         {
+                            lexeme = string.Empty;
                             state = 0;
                         }
                         else 
@@ -474,7 +478,7 @@ namespace PascalWebCompiler.Lexer
                         }
                         else
                         {
-                            return new Token { Type = TokenType.DOUBLE, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
+                            return new Token { Type = TokenType.REAL_LITERAL, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
                         }
                         break;
                     default:

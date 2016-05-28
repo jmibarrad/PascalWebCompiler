@@ -60,7 +60,7 @@ Scenario:Declare an enumerated type with Error
 	Then the result should fail
 
 Scenario:Declare a record
-	Given the following source code 'type rec = record begin x:integer end;%>'
+	Given the following source code 'type rec = record x:integer end;%>'
 	When We Parse
 	Then the result should pass
 

@@ -36,7 +36,8 @@ namespace PascalWebCompiler.Lexer
             { "of", TokenType.KW_OF },
             { "record", TokenType.KW_RECORD },
             { "var", TokenType.KW_VAR },
-            { "type", TokenType.KW_TYPE }
+            { "type", TokenType.KW_TYPE },
+            { "to", TokenType.KW_TO }
 
         };
 
