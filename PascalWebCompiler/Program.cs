@@ -25,7 +25,11 @@ namespace PascalWebCompiler
             //text = "<%while a < 6 do begin writeln(a); a := a + 1; end;%>";
             //text = "<%a.test := 2*3;%>";
             //text = "<%case place of 1: ShowMessage('sds');2: ShowMessage(sdds);3: ShowMessage(sd.test); else ShowMessage(sdsd);end; %>";
-            text = "<%case place of 1: begin ShowMessage('sds'); ShowMessage('sds'); ShowMessage('sds'); end; 2: ShowMessage(sdds); 3 + expureichion(arr[expureichion(arr[4].algo[4][4].dd)]): ShowMessage(sd.test); else ShowMessage(sdsd); end; %>";
+            //text = "<%case place of 1: begin ShowMessage('sds'); ShowMessage('sds'); ShowMessage('sds'); end; 2: ShowMessage(sdds); 3 + expureichion(arr[expureichion(arr[4].algo[4][4].dd)]): ShowMessage(sd.test); else ShowMessage(sdsd); end; %>";
+            //text = "<%shit(shit(5));%>";
+            //text = "<%var id : Integer;%>";
+            text = "<%id := 5+4%>";
+
             Lexer.Lexer lexer = new Lexer.Lexer(new SourceCodeContent(text));
             var parser = new SyntacticParser(lexer);
             try

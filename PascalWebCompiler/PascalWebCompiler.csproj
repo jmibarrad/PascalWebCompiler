@@ -54,6 +54,8 @@
     <Compile Include="Lexer\Symbol.cs" />
     <Compile Include="Lexer\Token.cs" />
     <Compile Include="Syntactic\SyntacticParser.cs" />
+    <Compile Include="Syntactic\Tree\ExpressionNode.cs" />
+    <Compile Include="Syntactic\Tree\SentenceNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
