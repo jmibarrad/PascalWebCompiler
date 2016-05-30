@@ -132,14 +132,6 @@ namespace PascalWebCompiler.Syntactic
             {
                 _currentToken = _lexer.GetNextToken();
                 While();
-                /*if (_currentToken.Type == TokenType.EOS)
-                {
-                    _currentToken = _lexer.GetNextToken();
-                }
-                else
-                {
-                    throw new SyntaxException($"Unexpected Sentence Token: {_currentToken.Lexeme} Expected ';' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
-                }*/
             }
             else if (_currentToken.Type == TokenType.ID)
             {
@@ -171,6 +163,10 @@ namespace PascalWebCompiler.Syntactic
                 {
                     throw new SyntaxException($"Unexpected Sentence Token: {_currentToken.Lexeme} Expected ';' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
                 }
+            }
+            else
+            {
+                throw new SyntaxException($"Unexpected MOTHER EXCEPTION: {_currentToken.Lexeme} Expected ';' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
             }
         }
 
@@ -839,12 +835,6 @@ namespace PascalWebCompiler.Syntactic
             {
                 throw new SyntaxException($"Unexpected EnumeratedTypes Token: Expected: ')' at {_currentToken.Lexeme} Column: {_currentToken.Column} Row: {_currentToken.Row}");
             }
-        }
-
-        public void TypeDef()
-        {
-            _currentToken = _lexer.GetNextToken();
-
         }
 
         public void Record()
