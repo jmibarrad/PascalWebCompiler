@@ -80,21 +80,26 @@ Scenario:Declare a case
 	Then the result should pass
 
 Scenario: A while sentence
-	Given the following source code '<%while a < 6 do begin writeln (a); a := a + 1 end;%>'
+	Given the following source code '<%while a < 6 do begin writeln(a); a := a + 1; end;%>'
 	When We Parse
 	Then the result should pass
 
 Scenario: A function declaration
-	Given the following source code '<%function CircleArea(var radius, r1, r2: Integer): Integer; var area: Integer; begin end;%>'
+	Given the following source code '<%function CircleArea(var radius, r1, r2: Integer): Integer;  begin var area: Integer; end;%>'
 	When We Parse
 	Then the result should pass
 
 Scenario: A for sentence
-	Given the following source code '<%for count := 1 to 100 do begin sum := sum + count; if sum = 38 then break; end;%>'
+	Given the following source code '<%for count := 1 to 100 do begin sum := sum + count; if (sum = 38) then break; end;%>'
+	When We Parse
+	Then the result should pass
+
+Scenario: A for sentence only one sentence
+	Given the following source code '<%for count := 1 to 100 do sum := sum + count;%>'
 	When We Parse
 	Then the result should pass
 
 Scenario: A procedure declaration
-	Given the following source code '<%procedure swap(var c1,c2:char); var c:char; begin c:=c1; c1:=c2; c2:=c; end;%>'
+	Given the following source code '<%procedure swap(var c1,c2:char); begin var c:char; c:=c1; c1:=c2; c2:=c; end;%>'
 	When We Parse
 	Then the result should pass

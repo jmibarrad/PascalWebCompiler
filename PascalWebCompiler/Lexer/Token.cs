@@ -65,7 +65,6 @@
         TK_REALDIVISION,
         HTML,
         TK_COMMA,
-        TK_PERIOD,
         TK_COLON,
         KW_REPEAT,
         CHAR_LITERAL,

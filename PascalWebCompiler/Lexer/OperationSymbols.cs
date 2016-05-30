@@ -14,8 +14,6 @@ namespace PascalWebCompiler.Lexer
             { ")", TokenType.TK_RIGHTPARENTHESIS },
             { ";", TokenType.EOS },
             { ",", TokenType.TK_COMMA },
-            //{ ".", TokenType.TK_PERIOD }
-
         };
     }
 }

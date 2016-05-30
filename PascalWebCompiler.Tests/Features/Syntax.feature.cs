@@ -354,7 +354,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 82
 this.ScenarioSetup(scenarioInfo);
 #line 83
- testRunner.Given("the following source code \'<%while a < 6 do begin writeln (a); a := a + 1 end;%>\'" +
+ testRunner.Given("the following source code \'<%while a < 6 do begin writeln(a); a := a + 1; end;%>\'" +
                     "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 84
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -374,7 +374,7 @@ this.ScenarioSetup(scenarioInfo);
 this.ScenarioSetup(scenarioInfo);
 #line 88
  testRunner.Given("the following source code \'<%function CircleArea(var radius, r1, r2: Integer): In" +
-                    "teger; var area: Integer; begin end;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+                    "teger;  begin var area: Integer; end;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 89
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 90
@@ -393,10 +393,28 @@ this.ScenarioSetup(scenarioInfo);
 this.ScenarioSetup(scenarioInfo);
 #line 93
  testRunner.Given("the following source code \'<%for count := 1 to 100 do begin sum := sum + count; i" +
-                    "f sum = 38 then break; end;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+                    "f (sum = 38) then break; end;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 94
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 95
+ testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("A for sentence only one sentence")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Syntax")]
+        public virtual void AForSentenceOnlyOneSentence()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A for sentence only one sentence", ((string[])(null)));
+#line 97
+this.ScenarioSetup(scenarioInfo);
+#line 98
+ testRunner.Given("the following source code \'<%for count := 1 to 100 do sum := sum + count;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 99
+ testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 100
  testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -408,14 +426,14 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void AProcedureDeclaration()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A procedure declaration", ((string[])(null)));
-#line 97
+#line 102
 this.ScenarioSetup(scenarioInfo);
-#line 98
- testRunner.Given("the following source code \'<%procedure swap(var c1,c2:char); var c:char; begin c:" +
+#line 103
+ testRunner.Given("the following source code \'<%procedure swap(var c1,c2:char); begin var c:char; c:" +
                     "=c1; c1:=c2; c2:=c; end;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 99
+#line 104
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 100
+#line 105
  testRunner.Then("the result should pass", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
