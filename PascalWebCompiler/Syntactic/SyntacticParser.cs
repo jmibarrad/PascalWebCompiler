@@ -1,5 +1,8 @@
-﻿using PascalWebCompiler.Exceptions;
+﻿using System.Collections.Generic;
+using PascalWebCompiler.Exceptions;
 using PascalWebCompiler.Lexer;
+using PascalWebCompiler.Syntactic.Tree;
+using PascalWebCompiler.Syntactic.Tree.Operators;
 
 namespace PascalWebCompiler.Syntactic
 {
@@ -16,21 +19,22 @@ namespace PascalWebCompiler.Syntactic
         public void Parse()
         {
             _currentToken = _lexer.GetNextToken();
-            SentenceList();    
+            /*var tree = */SentenceList();
+            //return tree;
         }
 
-        public void SentenceList()
+        public SentenceNode SentenceList()
         {
             if (_currentToken.Type == TokenType.EOF || _currentToken.Type == TokenType.KW_END)
             {
-                return;
+                return null;
             }
-            Sentence();
-            SentenceList();
-
+            var sentence = Sentence();
+            sentence.NextSentence= SentenceList();
+            return Sentence();
         }
 
-        public void Sentence()
+        public SentenceNode Sentence()
         {
             if (_currentToken.Type == TokenType.KW_TYPE)
             {
@@ -39,6 +43,7 @@ namespace PascalWebCompiler.Syntactic
                 if (_currentToken.Type == TokenType.EOS)
                 {
                     _currentToken = _lexer.GetNextToken();
+                    return new DeclarationNode();
                 }
                 else
                 {
@@ -54,14 +59,6 @@ namespace PascalWebCompiler.Syntactic
             {
                 _currentToken = _lexer.GetNextToken();
                 PreFor();
-                /*if (_currentToken.Type == TokenType.EOS)
-                {
-                    _currentToken = _lexer.GetNextToken();
-                }
-                else
-                {
-                    throw new SyntaxException($"Unexpected Sentence Token: {_currentToken.Lexeme} Expected ';' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
-                }*/
             }
             else if (_currentToken.Type == TokenType.KW_VAR)
             {
@@ -545,17 +542,20 @@ namespace PascalWebCompiler.Syntactic
 
         private void CaseList()
         {
-            CaseLiteral();
-            if (_currentToken.Type == TokenType.TK_COLON)
+            if (_currentToken.Type == TokenType.KW_ELSE)
             {
                 _currentToken = _lexer.GetNextToken();
                 Block();
-                CaseList();
             }
-            else if(_currentToken.Type == TokenType.KW_ELSE)
+            else if(_currentToken.Type == TokenType.NUMBER_LITERAL)
             {
-                _currentToken = _lexer.GetNextToken();
-                Block();
+                CaseLiteral();
+                if (_currentToken.Type == TokenType.TK_COLON)
+                {
+                    _currentToken = _lexer.GetNextToken();
+                    Block();
+                    CaseList();
+                }
             }
         }
 
@@ -784,6 +784,10 @@ namespace PascalWebCompiler.Syntactic
 
         private void CallFunction()
         {
+            if (_currentToken.Type == TokenType.TK_RIGHTPARENTHESIS)
+            {
+                return;
+            }
             PascalExpression();
             OptionalExpressionList();
         }
@@ -792,6 +796,10 @@ namespace PascalWebCompiler.Syntactic
         {
             if (_currentToken.Type == TokenType.TK_COMMA)
             {
+                _currentToken = _lexer.GetNextToken();
+                if(_currentToken.Type != TokenType.NUMBER_LITERAL)
+                    throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: 'NUMBER_LITERAL' Column: {_currentToken.Column} Row: {_currentToken.Row}");
+
                 _currentToken = _lexer.GetNextToken();
                 RangeList();
             }
@@ -922,7 +930,16 @@ namespace PascalWebCompiler.Syntactic
             if (_currentToken.Type == TokenType.TK_LEFTBRACKET)
             {
                 _currentToken = _lexer.GetNextToken();
-                RangeList();
+                if (_currentToken.Type == TokenType.NUMBER_LITERAL)
+                {
+                    _currentToken = _lexer.GetNextToken();
+                    RangeList();
+                }
+                else if(_currentToken.Type == TokenType.ID)
+                {
+                    _currentToken = _lexer.GetNextToken();
+                }
+                
                 if (_currentToken.Type == TokenType.TK_RIGHTBRACKET)
                 {
                     _currentToken = _lexer.GetNextToken();
@@ -933,12 +950,14 @@ namespace PascalWebCompiler.Syntactic
                     }
                     else
                     {
-                        throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: 'of' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                        throw new SyntaxException(
+                            $"Unexpected Token: {_currentToken.Lexeme} Expected: 'of' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
                     }
                 }
                 else
                 {
-                    throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: ']' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                    throw new SyntaxException(
+                        $"Unexpected Token: {_currentToken.Lexeme} Expected: ']' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
                 }
             }
             else
@@ -958,7 +977,7 @@ namespace PascalWebCompiler.Syntactic
                 _currentToken = _lexer.GetNextToken();
                 Array();
             }
-            else 
+            else if(_currentToken.Type == TokenType.NUMBER_LITERAL)
             {
                 _currentToken = _lexer.GetNextToken();
                 Range();
@@ -973,39 +992,22 @@ namespace PascalWebCompiler.Syntactic
 
         private void Range()
         {
-            if (_currentToken.Type == TokenType.ID)
-            {
-                _currentToken = _lexer.GetNextToken();
-                if (_currentToken.Type == TokenType.TK_RANGE)
-                {
-                    _currentToken = _lexer.GetNextToken();
-                    PascalExpression();
-                }
-            }
-            else
-            {
-                SubRange();
-                if (_currentToken.Type == TokenType.ID)
-                {
-                    _currentToken = _lexer.GetNextToken();
-                }
-            }
-        }
-
-        private void SubRange()
-        {
-
-            PascalExpression();
+            
             if (_currentToken.Type == TokenType.TK_RANGE)
             {
                 _currentToken = _lexer.GetNextToken();
-                PascalExpression();
+                if (_currentToken.Type != TokenType.NUMBER_LITERAL)
+                {
+                    throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: 'NUMBER_LITERAL' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                }
+
+                _currentToken = _lexer.GetNextToken();
+
             }
             else
             {
                 throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: '..' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
             }
-
         }
 
         private void OptionalExpressionList()
@@ -1039,86 +1041,98 @@ namespace PascalWebCompiler.Syntactic
             }
         }
 
-        private void PascalExpression()
+        private ExpressionNode PascalExpression()
         {
-            RelationalExpression();
+            return RelationalExpression();
         }
 
-        private void RelationalExpression()
+        private ExpressionNode RelationalExpression()
         {
 
-            AdditionExpresion();
-            RelationalExpressionPrime();
+            var node = AdditionExpresion();
+            return RelationalExpressionPrime(node);
         }
 
-        private void AdditionExpresion()
+        private ExpressionNode AdditionExpresion()
         {
-            MultiplicationExpression();
-            AdditionExpresionPrime();
+            var multNode = MultiplicationExpression();
+            return AdditionExpresionPrime(multNode);
         }
 
-        private void MultiplicationExpression()
+        private ExpressionNode MultiplicationExpression()
         {
-            Unary_Expression();
-            MultiplicationExpressionPrime();
+            var uNode  = Unary_Expression();
+            return MultiplicationExpressionPrime(uNode);
         }
 
-        private void Unary_Expression()
+        private ExpressionNode Unary_Expression()
         {
-            Factor();
+            return Factor();
         }
 
-        private void Factor()
+        private ExpressionNode Factor()
         {
             if (_currentToken.Type == TokenType.KW_NOT)
             {
                 _currentToken = _lexer.GetNextToken();
-                Factor();
+                var notNode = new NotNode {ExpressionNode = Factor()};
+                return notNode;
             }
             else if (_currentToken.Type == TokenType.NUMBER_LITERAL)
             {
+                var numberValue = _currentToken.Lexeme; 
                 _currentToken = _lexer.GetNextToken();
+                return new NumberNode {Value = int.Parse(numberValue)};
             }
             else if (_currentToken.Type == TokenType.STRING_LITERAL)
             {
+                var stringValue = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
+                return new StringLiteralNode { Value = stringValue };
+
             }
             else if (_currentToken.Type == TokenType.CHAR_LITERAL)
             {
+                var value = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
-            }
-            else if (_currentToken.Type == TokenType.KW_NOT)
-            {
-                _currentToken = _lexer.GetNextToken();
-                Factor();
+                return new CharLiteralNode { Value = value[0] };
             }
             else if (_currentToken.Type == TokenType.HEX)
             {
+                var value = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
+                return new HexNode { Value = int.Parse(value) };
             }
             else if (_currentToken.Type == TokenType.BIN)
             {
+                var value = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
+                return new BinNode { Value = int.Parse(value) };
             }
             else if (_currentToken.Type == TokenType.OCTAL)
             {
+                var value = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
+                return new OctalNode { Value = int.Parse(value) };
             }
             else if (_currentToken.Type == TokenType.REAL_LITERAL)
             {
+                var value = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
+                return new RealNode { Value = float.Parse(value) };
             }
             else if (_currentToken.Type == TokenType.ID)
             {
+                var idValue = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
                 if (_currentToken.Type == TokenType.TK_LEFTPARENTHESIS)
                 {
                     _currentToken = _lexer.GetNextToken();
                     CallFunction();
-                    //_currentToken = _lexer.GetNextToken();
                     if (_currentToken.Type == TokenType.TK_RIGHTPARENTHESIS)
                     {
                         _currentToken = _lexer.GetNextToken();
+                        return new ExpressionNode(); //need to implement this shit
                     }
                     else
                     {
@@ -1126,9 +1140,10 @@ namespace PascalWebCompiler.Syntactic
                             $"Unexpected Token: {_currentToken.Lexeme} Expected ')' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
                     }
                 }
-                else if(_currentToken.Type == TokenType.TK_LEFTBRACKET|| _currentToken.Type == TokenType.TK_ACCESS)
+                else
                 {
-                    IndexingAndAccess();
+                    var accessorList = IndexingAndAccess();
+                    return new IdNode {Value = idValue, Accesors = accessorList};
                 }
                 
 
@@ -1136,125 +1151,146 @@ namespace PascalWebCompiler.Syntactic
             else if (_currentToken.Type == TokenType.TK_LEFTPARENTHESIS)
             {
                 _currentToken = _lexer.GetNextToken();
-                PascalExpression();
+                var expr = PascalExpression();
                 //_currentToken = _lexer.GetNextToken();
                 if (_currentToken.Type != TokenType.TK_RIGHTPARENTHESIS)
                 {
                     throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected ')' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
                 }
                 _currentToken = _lexer.GetNextToken();
+                return expr;
             }
+
+            throw new SyntaxException($"F() Unexpected Token: {_currentToken.Lexeme} at Column: {_currentToken.Column} Row: {_currentToken.Row}");
         }
 
-        private void MultiplicationExpressionPrime()
+        private ExpressionNode MultiplicationExpressionPrime(ExpressionNode param)
         {
             if (_currentToken.Type == TokenType.MULT)
             {
                 _currentToken = _lexer.GetNextToken();
-                Unary_Expression();
-                MultiplicationExpressionPrime();
+                var uNode = Unary_Expression();
+                var node = new Mult { LeftOperand = param, RightOperand = uNode };
+                return MultiplicationExpressionPrime(node);
             }
             else if (_currentToken.Type == TokenType.DIV)
             {
                 _currentToken = _lexer.GetNextToken();
-                Unary_Expression();
-                MultiplicationExpressionPrime();
+                var uNode = Unary_Expression();
+                var node = new Div { LeftOperand = param, RightOperand = uNode };
+                return MultiplicationExpressionPrime(node);
             }
             else if (_currentToken.Type == TokenType.TK_REALDIVISION)
             {
                 _currentToken = _lexer.GetNextToken();
-                Unary_Expression();
-                MultiplicationExpressionPrime();
+                var uNode = Unary_Expression();
+                var node = new RealDiv { LeftOperand = param, RightOperand = uNode };
+                return MultiplicationExpressionPrime(node);
             }
             else if (_currentToken.Type == TokenType.MOD)
             {
                 _currentToken = _lexer.GetNextToken();
-                Unary_Expression();
-                MultiplicationExpressionPrime();
+                var uNode = Unary_Expression();
+                var node = new Mod { LeftOperand = param, RightOperand = uNode };
+                return MultiplicationExpressionPrime(node);
             }
             else if (_currentToken.Type == TokenType.KW_AND)
             {
                 _currentToken = _lexer.GetNextToken();
-                Unary_Expression();
-                MultiplicationExpressionPrime();
+                var uNode = Unary_Expression();
+                var node = new And { LeftOperand = param, RightOperand = uNode };
+                return MultiplicationExpressionPrime(node);
             }
-            
+
+            return param;
         }
 
-        private void AdditionExpresionPrime()
+        private ExpressionNode AdditionExpresionPrime(ExpressionNode param)
         {
             if (_currentToken.Type == TokenType.SUM)
             {
                 _currentToken = _lexer.GetNextToken();
-                MultiplicationExpression();
-                AdditionExpresionPrime();
+                var secondLevelExpression = MultiplicationExpression();
+                var node = new Sum { LeftOperand = param, RightOperand = secondLevelExpression };
+                return AdditionExpresionPrime(node);
             }
             else if (_currentToken.Type == TokenType.SUB)
             {
                 _currentToken = _lexer.GetNextToken();
-                MultiplicationExpression();
-                AdditionExpresionPrime();
+                var secondLevelExpression = MultiplicationExpression();
+                var node = new Sub { LeftOperand = param, RightOperand = secondLevelExpression };
+                return AdditionExpresionPrime(node);
             }
             else if (_currentToken.Type == TokenType.KW_OR)
             {
                 _currentToken = _lexer.GetNextToken();
-                MultiplicationExpression();
-                AdditionExpresionPrime();
+                var secondLevelExpression = MultiplicationExpression();
+                var node = new Or { LeftOperand = param, RightOperand = secondLevelExpression };
+                return AdditionExpresionPrime(node);
             }
 
+            return param;
         }
 
-        private void RelationalExpressionPrime()
+        private ExpressionNode RelationalExpressionPrime(ExpressionNode param)
         {
             if (_currentToken.Type == TokenType.LESS_THAN)
             {
                 _currentToken = _lexer.GetNextToken();
-                AdditionExpresion();
-                RelationalExpressionPrime();
+                var secondLevelExpression = AdditionExpresion();
+                var node = new LessThan {LeftOperand = param, RightOperand = secondLevelExpression};
+                return RelationalExpressionPrime(node);
             }
             else if (_currentToken.Type == TokenType.GREATER_EQUAL)
             {
                 _currentToken = _lexer.GetNextToken();
-                AdditionExpresion();
-                RelationalExpressionPrime();
+                var secondLevelExpression = AdditionExpresion();
+                var node = new GreaterThan { LeftOperand = param, RightOperand = secondLevelExpression };
+                return RelationalExpressionPrime(node);
             }
             else if (_currentToken.Type == TokenType.LESS_EQUAL)
             {
                 _currentToken = _lexer.GetNextToken();
-                AdditionExpresion();
-                RelationalExpressionPrime();
+                var secondLevelExpression = AdditionExpresion();
+                var node = new LessEqual { LeftOperand = param, RightOperand = secondLevelExpression };
+                return RelationalExpressionPrime(node);
             }
             else if (_currentToken.Type == TokenType.GREATER_THAN)
             {
                 _currentToken = _lexer.GetNextToken();
-                AdditionExpresion();
-                RelationalExpressionPrime();
+                var secondLevelExpression = AdditionExpresion();
+                var node = new GreaterThan { LeftOperand = param, RightOperand = secondLevelExpression };
+                return RelationalExpressionPrime(node);
             }
             else if (_currentToken.Type == TokenType.NOT_EQUAL)
             {
                 _currentToken = _lexer.GetNextToken();
-                AdditionExpresion();
-                RelationalExpressionPrime();
+                var secondLevelExpression = AdditionExpresion();
+                var node = new NotEqual { LeftOperand = param, RightOperand = secondLevelExpression };
+                return RelationalExpressionPrime(node);
             }
             else if (_currentToken.Type == TokenType.EQUAL)
             {
                 _currentToken = _lexer.GetNextToken();
-                AdditionExpresion();
-                RelationalExpressionPrime();
+                var secondLevelExpression = AdditionExpresion();
+                var node = new Equal { LeftOperand = param, RightOperand = secondLevelExpression };
+                return RelationalExpressionPrime(node);
             }
-            
+            return param;
         }
 
-        private void IndexingAndAccess()
+        private List<AccesorNode> IndexingAndAccess()
         {
             if (_currentToken.Type == TokenType.TK_LEFTBRACKET)
             {
                 _currentToken = _lexer.GetNextToken();
-                PascalExpression();
+                var expr = PascalExpression();
                 if (_currentToken.Type == TokenType.TK_RIGHTBRACKET)
                 {
                     _currentToken = _lexer.GetNextToken();
-                    IndexingAndAccess();
+                    var accessorList = IndexingAndAccess();
+                    accessorList.Add(new IndexAccesorNode() { IndexExpression = expr});
+                    return accessorList;
                 }
                 else
                 {
@@ -1266,14 +1302,21 @@ namespace PascalWebCompiler.Syntactic
                 _currentToken = _lexer.GetNextToken();
                 if (_currentToken.Type == TokenType.ID)
                 {
+                    var idNode = new IdNode() {Value = _currentToken.Lexeme};
                     _currentToken = _lexer.GetNextToken();
-                    IndexingAndAccess();
+                    var accessorList = IndexingAndAccess();
+                    accessorList.Add(new PropertyAccesorNode());
+                    return accessorList;
                 }
                 else
                 {
-                    throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: '[' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                    throw new SyntaxException(
+                        $"Unexpected Token: {_currentToken.Lexeme} Expected: '[' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
                 }
             }
+           
+            return new List<AccesorNode>();
         }
+
     }
 }

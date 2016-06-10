@@ -28,8 +28,10 @@ namespace PascalWebCompiler
             //text = "<%case place of 1: begin ShowMessage('sds'); ShowMessage('sds'); ShowMessage('sds'); end; 2: ShowMessage(sdds); 3 + expureichion(arr[expureichion(arr[4].algo[4][4].dd)]): ShowMessage(sd.test); else ShowMessage(sdsd); end; %>";
             //text = "<%shit(shit(5));%>";
             //text = "<%var id : Integer;%>";
-            text = "<%id := 5+4%>";
-
+            //text = "<%id := 5+4%>";
+            //text = "<%case c of 1..4 : s:= 'lowercase letter (a-z)'; 100..400 : s:= 'lowercase letter (a-z)'; 4..5 : s:= 'lowercase letter (a-z)'; 400: s:= '400 case'; end; %> '";
+            //text = "<%case c of r : s:= 'lowercase letter (a-z)'; a,b,c : s:= 'lowercase letter (a-z)'; a : s:= 'lowercase letter (a-z)'; 400: s:= '400 case'; end; %> '";
+            //text = "<%type simpleintegerarray = array [4..33, 34..99] of integer;%>";
             Lexer.Lexer lexer = new Lexer.Lexer(new SourceCodeContent(text));
             var parser = new SyntacticParser(lexer);
             try

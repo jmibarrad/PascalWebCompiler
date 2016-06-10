@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PascalWebCompiler.Lexer;
+﻿using PascalWebCompiler.Lexer;
 
 namespace PascalWebCompiler.Syntactic.Tree
 {
@@ -51,11 +46,6 @@ namespace PascalWebCompiler.Syntactic.Tree
     }
 
     public class CaseNode : SentenceNode
-    {
-        
-    }
-
-    public class RecordNode : SentenceNode
     {
         
     }

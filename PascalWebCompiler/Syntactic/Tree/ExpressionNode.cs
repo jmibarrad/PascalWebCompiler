@@ -8,13 +8,13 @@ namespace PascalWebCompiler.Syntactic.Tree
 {
     public class ExpressionNode
     {
-
+        
     }
 
     public class IdNode : ExpressionNode
     {
         public string Value;
-        public IdNode NextIdNode;
+        public List<AccesorNode> Accesors;
 
     }
 
@@ -33,4 +33,25 @@ namespace PascalWebCompiler.Syntactic.Tree
         public string Value;
     }
 
+    public class HexNode : ExpressionNode
+    {
+        public int Value;
+
+    }
+
+    public class BinNode : ExpressionNode
+    {
+        public int Value;
+    }
+
+    public class OctalNode : ExpressionNode
+    {
+        public int Value;
+    }
+
+
+    public class NotNode : ExpressionNode
+    {
+        public ExpressionNode ExpressionNode;
+    }
 }

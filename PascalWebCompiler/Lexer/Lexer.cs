@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using PascalWebCompiler.Exceptions;
 
@@ -216,6 +217,7 @@ namespace PascalWebCompiler.Lexer
                         }
                         else
                         {
+                            lexeme = HexToInt(lexeme);
                             return new Token { Type = TokenType.HEX, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
                         }
                        
@@ -343,6 +345,7 @@ namespace PascalWebCompiler.Lexer
                         }
                         else
                         {
+                            lexeme = OctalToInt(lexeme);
                             return new Token { Type = TokenType.OCTAL, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
                         }
                         break;
@@ -427,8 +430,9 @@ namespace PascalWebCompiler.Lexer
                             _currentSymbol = Content.NextSymbol();
                             state = 22;
                         }
-                        else 
+                        else
                         {
+                            lexeme = BinToInt(lexeme);
                             return new Token { Type = TokenType.BIN, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
                         }
                         break;
@@ -502,5 +506,25 @@ namespace PascalWebCompiler.Lexer
             return Regex.IsMatch(text, "^[0-7]+$");
         }
 
+        private string HexToInt(string hexNum)
+        {
+            var stringNum = hexNum.Remove(0, 1);
+            var integerNum = Convert.ToInt32(stringNum, 16);
+            return integerNum.ToString();
+        }
+
+        private string OctalToInt(string octalNum)
+        {
+            var stringNum = octalNum.Remove(0, 1);
+            var integerNum = Convert.ToInt32(stringNum, 8);
+            return integerNum.ToString();
+        }
+
+        private string BinToInt(string binNum)
+        {
+            var stringNum = binNum.Remove(0, 1);
+            var integerNum = Convert.ToInt32(stringNum, 2);
+            return integerNum.ToString();
+        }
     }
 }

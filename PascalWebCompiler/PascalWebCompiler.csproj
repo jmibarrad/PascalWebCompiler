@@ -53,13 +53,37 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Lexer\Symbol.cs" />
     <Compile Include="Lexer\Token.cs" />
+    <Compile Include="Syntactic\Tree\AccesorNode.cs" />
+    <Compile Include="Syntactic\Tree\DeclareType\ArrayNode.cs" />
+    <Compile Include="Syntactic\Tree\CharLiteralNode.cs" />
+    <Compile Include="Syntactic\Tree\DeclareType\EnumeratedTypeNode.cs" />
+    <Compile Include="Syntactic\Tree\DeclareType\TypeDefNode.cs" />
+    <Compile Include="Syntactic\Tree\IndexAccesorNode.cs" />
+    <Compile Include="Syntactic\PropertyAccesorNode.cs" />
     <Compile Include="Syntactic\SyntacticParser.cs" />
+    <Compile Include="Syntactic\Tree\Operators\And.cs" />
+    <Compile Include="Syntactic\Tree\Operators\BinaryOperator.cs" />
     <Compile Include="Syntactic\Tree\ExpressionNode.cs" />
+    <Compile Include="Syntactic\Tree\DeclareType\RecordNode.cs" />
+    <Compile Include="Syntactic\Tree\Operators\Div.cs" />
+    <Compile Include="Syntactic\Tree\Operators\Equal.cs" />
+    <Compile Include="Syntactic\Tree\Operators\GreaterThan.cs" />
+    <Compile Include="Syntactic\Tree\Operators\LessEqual.cs" />
+    <Compile Include="Syntactic\Tree\Operators\LessThan.cs" />
+    <Compile Include="Syntactic\Tree\Operators\Mod.cs" />
+    <Compile Include="Syntactic\Tree\Operators\Mult.cs" />
+    <Compile Include="Syntactic\Tree\Operators\NotEqual.cs" />
+    <Compile Include="Syntactic\Tree\Operators\Or.cs" />
+    <Compile Include="Syntactic\Tree\Operators\RealDiv.cs" />
+    <Compile Include="Syntactic\Tree\Operators\Sub.cs" />
+    <Compile Include="Syntactic\Tree\Operators\Sum.cs" />
     <Compile Include="Syntactic\Tree\SentenceNode.cs" />
+    <Compile Include="Syntactic\Tree\DeclareType\TypeDeclarationNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

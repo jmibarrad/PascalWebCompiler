@@ -411,7 +411,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Row"});
             table10.AddRow(new string[] {
                         "HEX",
-                        "$FF09",
+                        "65289",
                         "2",
                         "0"});
             table10.AddRow(new string[] {
@@ -445,7 +445,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Row"});
             table11.AddRow(new string[] {
                         "BIN",
-                        "%0101",
+                        "5",
                         "2",
                         "0"});
             table11.AddRow(new string[] {
@@ -479,7 +479,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Row"});
             table12.AddRow(new string[] {
                         "OCTAL",
-                        "&07121",
+                        "3665",
                         "2",
                         "0"});
             table12.AddRow(new string[] {
@@ -528,7 +528,7 @@ this.ScenarioSetup(scenarioInfo);
                         "0"});
             table13.AddRow(new string[] {
                         "BIN",
-                        "%0101",
+                        "5",
                         "17",
                         "0"});
             table13.AddRow(new string[] {
