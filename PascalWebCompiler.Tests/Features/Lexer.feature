@@ -84,7 +84,7 @@ Scenario: Input is a hexadecimal Number
 	When We Tokenize
 	Then the result should be 
 		| Type				| Lexeme		| Column | Row |
-		| HEX				| 65289			|   2    | 0   |
+		| NUMBER_LITERAL	| 65289			|   2    | 0   |
 		| EOF				| $				|   7	 | 0   |
 
 Scenario: Input is a binary num
@@ -92,7 +92,7 @@ Scenario: Input is a binary num
 	When We Tokenize
 	Then the result should be 
 		| Type				| Lexeme		| Column | Row |
-		| BIN				| 5				|   2    | 0   |
+		| NUMBER_LITERAL	| 5				|   2    | 0   |
 		| EOF				| $				|   7	 | 0   |
 
 Scenario: Input is a octal num
@@ -100,7 +100,7 @@ Scenario: Input is a octal num
 	When We Tokenize
 	Then the result should be 
 		| Type				| Lexeme		| Column | Row |
-		| OCTAL				| 3665			|   2    | 0   |
+		| NUMBER_LITERAL	| 3665			|   2    | 0   |
 		| EOF				| $				|   8	 | 0   |
 
 Scenario: Input is a binary assign num
@@ -111,7 +111,7 @@ Scenario: Input is a binary assign num
 		| ID				| integer		|   2    | 0   |
 		| ID				| bin			|   10	 | 0   |
 		| TK_ASSIGN			| :=			|   14   | 0   |
-		| BIN				| 5				|   17	 | 0   |
+		| NUMBER_LITERAL	| 5				|   17	 | 0   |
 		| EOS				| ;				|   22   | 0   |
 		| EOF				| $				|   23	 | 0   |
 

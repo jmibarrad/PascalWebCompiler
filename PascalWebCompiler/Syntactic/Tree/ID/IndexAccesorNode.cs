@@ -1,4 +1,6 @@
-namespace PascalWebCompiler.Syntactic.Tree
+using PascalWebCompiler.Syntactic.Tree.Expression;
+
+namespace PascalWebCompiler.Syntactic.Tree.ID
 {
     public class IndexAccesorNode : AccesorNode
     {

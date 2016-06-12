@@ -218,7 +218,7 @@ namespace PascalWebCompiler.Lexer
                         else
                         {
                             lexeme = HexToInt(lexeme);
-                            return new Token { Type = TokenType.HEX, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
+                            return new Token { Type = TokenType.NUMBER_LITERAL, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
                         }
                        
                         break;
@@ -346,7 +346,7 @@ namespace PascalWebCompiler.Lexer
                         else
                         {
                             lexeme = OctalToInt(lexeme);
-                            return new Token { Type = TokenType.OCTAL, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
+                            return new Token { Type = TokenType.NUMBER_LITERAL, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
                         }
                         break;
                     case 17:
@@ -433,7 +433,7 @@ namespace PascalWebCompiler.Lexer
                         else
                         {
                             lexeme = BinToInt(lexeme);
-                            return new Token { Type = TokenType.BIN, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
+                            return new Token { Type = TokenType.NUMBER_LITERAL, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
                         }
                         break;
                     case 23:

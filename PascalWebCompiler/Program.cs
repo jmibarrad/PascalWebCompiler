@@ -32,11 +32,38 @@ namespace PascalWebCompiler
             //text = "<%case c of 1..4 : s:= 'lowercase letter (a-z)'; 100..400 : s:= 'lowercase letter (a-z)'; 4..5 : s:= 'lowercase letter (a-z)'; 400: s:= '400 case'; end; %> '";
             //text = "<%case c of r : s:= 'lowercase letter (a-z)'; a,b,c : s:= 'lowercase letter (a-z)'; a : s:= 'lowercase letter (a-z)'; 400: s:= '400 case'; end; %> '";
             //text = "<%type simpleintegerarray = array [4..33, 34..99] of integer;%>";
+            /*text = @"<% 
+                    for x in x[23].ry[5].z do    
+                        if x < 19 then
+                        begin 
+                            var x,r,y : integer;
+                            var x : integer = 12; 
+                        end;
+                        else
+                            const p : integer = 14 +15;
+                    const m = 14 * 15;%>";*/
+            //text = @"<% 
+            //        procedure max(var num1, num2: integer; str, str2 : StriNg);
+            //        begin
+            //            var result: integer = 3;
+            //           (* local variable declaration *)
+            //           if (num1 > num2) then
+            //              result := num1;
+            //           else
+            //              result := num2;
+
+            //           for i:= 1 to 10 do writeln(i);
+
+            //           for Color in TColor do
+            //            DoSomething(Color);
+
+            //           max := result;
+            //        end;%>";
             Lexer.Lexer lexer = new Lexer.Lexer(new SourceCodeContent(text));
             var parser = new SyntacticParser(lexer);
             try
             {
-                parser.Parse();
+                var tree = parser.Parse();
                 Console.WriteLine("No errors found.");
             }
             catch (Exception e)

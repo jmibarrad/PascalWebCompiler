@@ -1,0 +1,9 @@
+using PascalWebCompiler.Syntactic.Tree.Expression;
+
+namespace PascalWebCompiler.Syntactic.Tree.Loops
+{
+    public class WhileNode : Loop
+    {
+        public ExpressionNode Condition;
+    }
+}

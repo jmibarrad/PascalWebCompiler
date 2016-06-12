@@ -1,4 +1,6 @@
-﻿namespace PascalWebCompiler.Syntactic.Tree.Operators
+﻿using PascalWebCompiler.Syntactic.Tree.Expression;
+
+namespace PascalWebCompiler.Syntactic.Tree.Operators
 {
     public class BinaryOperator : ExpressionNode
     {

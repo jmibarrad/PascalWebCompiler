@@ -410,7 +410,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Column",
                         "Row"});
             table10.AddRow(new string[] {
-                        "HEX",
+                        "NUMBER_LITERAL",
                         "65289",
                         "2",
                         "0"});
@@ -444,7 +444,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Column",
                         "Row"});
             table11.AddRow(new string[] {
-                        "BIN",
+                        "NUMBER_LITERAL",
                         "5",
                         "2",
                         "0"});
@@ -478,7 +478,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Column",
                         "Row"});
             table12.AddRow(new string[] {
-                        "OCTAL",
+                        "NUMBER_LITERAL",
                         "3665",
                         "2",
                         "0"});
@@ -527,7 +527,7 @@ this.ScenarioSetup(scenarioInfo);
                         "14",
                         "0"});
             table13.AddRow(new string[] {
-                        "BIN",
+                        "NUMBER_LITERAL",
                         "5",
                         "17",
                         "0"});

@@ -1,7 +1,6 @@
 namespace PascalWebCompiler.Syntactic.Tree
 {
-    public class AccesorNode
+    public class ContinueNode : SentenceNode
     {
-
     }
 }
