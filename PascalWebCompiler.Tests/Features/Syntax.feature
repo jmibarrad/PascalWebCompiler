@@ -65,7 +65,7 @@ Scenario:Declare a record
 	Then the result should pass
 
 Scenario:Declare a bidemensional array 
-	Given the following source code '<%type array2 = array [1..3] of array [1..5] of integer;%>'
+	Given the following source code '<%type array2 = array [1..3, 1..5] of integer;%>'
 	When We Parse
 	Then the result should pass
 

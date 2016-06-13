@@ -1,4 +1,4 @@
-﻿namespace PascalWebCompiler.Syntactic.Tree
+﻿namespace PascalWebCompiler.Syntactic.Tree.Loops
 {
     public class BreakNode : SentenceNode
     {

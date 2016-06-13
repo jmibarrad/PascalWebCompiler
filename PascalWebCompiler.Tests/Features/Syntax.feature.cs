@@ -296,8 +296,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 67
 this.ScenarioSetup(scenarioInfo);
 #line 68
- testRunner.Given("the following source code \'<%type array2 = array [1..3] of array [1..5] of intege" +
-                    "r;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("the following source code \'<%type array2 = array [1..3, 1..5] of integer;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 69
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 70

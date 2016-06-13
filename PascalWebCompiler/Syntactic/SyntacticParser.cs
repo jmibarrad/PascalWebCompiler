@@ -2,6 +2,7 @@
 using PascalWebCompiler.Exceptions;
 using PascalWebCompiler.Lexer;
 using PascalWebCompiler.Syntactic.Tree;
+using PascalWebCompiler.Syntactic.Tree.Case;
 using PascalWebCompiler.Syntactic.Tree.Declaration;
 using PascalWebCompiler.Syntactic.Tree.DeclareConstants;
 using PascalWebCompiler.Syntactic.Tree.DeclareType;
@@ -50,11 +51,11 @@ namespace PascalWebCompiler.Syntactic
             if (_currentToken.Type == TokenType.KW_TYPE)
             {
                 _currentToken = _lexer.GetNextToken();
-                DeclareType();
+                var typedeclaration = DeclareType();
                 if (_currentToken.Type == TokenType.EOS)
                 {
                     _currentToken = _lexer.GetNextToken();
-                    return new TypeDeclarationNode();
+                    return typedeclaration;
                 }
                 else
                 {
@@ -103,11 +104,11 @@ namespace PascalWebCompiler.Syntactic
             else if (_currentToken.Type == TokenType.KW_CASE)
             {
                 _currentToken = _lexer.GetNextToken();
-                Case();
+                var caseStatement = Case();
                 if (_currentToken.Type == TokenType.EOS)
                 {
                     _currentToken = _lexer.GetNextToken();
-                    return new CaseNode();
+                    return caseStatement;
                 }
                 else
                 {
@@ -314,7 +315,7 @@ namespace PascalWebCompiler.Syntactic
             {
                 var value = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
-                return new IdNode {Value = value, Accesors = new List<AccesorNode>()};
+                return new IdNode {Value = value};
             }
 
             return null;
@@ -387,7 +388,7 @@ namespace PascalWebCompiler.Syntactic
             if (_currentToken.Type == TokenType.ID)
             {
                 //var accesorList = IndexingAndAccess();
-                var idNode = new IdNode {Value = _currentToken.Lexeme, Accesors = new List<AccesorNode>()};
+                var idNode = new IdNode {Value = _currentToken.Lexeme};
                 _currentToken = _lexer.GetNextToken();
                 return ForBody(idNode);
             }
@@ -532,7 +533,7 @@ namespace PascalWebCompiler.Syntactic
                 {
                     _currentToken = _lexer.GetNextToken();
                     var loopSentenceList = LoopBlock();
-                    return new ForNode {Condition = condition, IdNode = idNode, Statements = loopSentenceList};
+                    return new ForNode {Condition = condition, CounterValue = expression, IdNode = idNode, Statements = loopSentenceList};
                 }
                 else
                 {
@@ -570,27 +571,26 @@ namespace PascalWebCompiler.Syntactic
                 var condition = PascalExpression();
                 return new RepeatNode {Condition = condition, Statements = sentenceList};
             }
-            else
-            {
-                throw new SyntaxException($"Unexpected For Token: {_currentToken.Lexeme} Expected: 'until'  at Column: {_currentToken.Column} Row: {_currentToken.Row}");
-            }
-
+            throw new SyntaxException($"Unexpected For Token: {_currentToken.Lexeme} Expected: 'until'  at Column: {_currentToken.Column} Row: {_currentToken.Row}");
         }
 
-        public void Case()
+        public SentenceNode Case()
         {
             if (_currentToken.Type == TokenType.ID)
             {
+                var caseLexeme = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
                 var accessorList = new List<AccesorNode>();
                 accessorList = IndexingAndAccess(accessorList);
                 if (_currentToken.Type == TokenType.KW_OF)
                 {
                     _currentToken = _lexer.GetNextToken();
-                    CaseList();
+                    var caseList = new List<CaseStatement>();
+                    caseList = CaseList(caseList);
                     if (_currentToken.Type == TokenType.KW_END)
                     {
                         _currentToken = _lexer.GetNextToken();
+                        return new CaseNode {IdNode = new IdNode { Value =caseLexeme, Accesors = accessorList}, CaseStatements = caseList};
 
                     }
                 }
@@ -599,56 +599,74 @@ namespace PascalWebCompiler.Syntactic
                     throw new SyntaxException($"Unexpected Case Token: {_currentToken.Lexeme} Expected: 'of'  at Column: {_currentToken.Column} Row: {_currentToken.Row}");
                 }
             }
-            else
-            {
-                throw new SyntaxException($"Unexpected Case Token: {_currentToken.Lexeme} Expected: ID  at Column: {_currentToken.Column} Row: {_currentToken.Row}");
-            }
+            
+            throw new SyntaxException($"Unexpected Case Token: {_currentToken.Lexeme} Expected: ID  at Column: {_currentToken.Column} Row: {_currentToken.Row}");
         }
 
-        private void CaseList()
+        private List<CaseStatement> CaseList(List<CaseStatement> caseList)
         {
             if (_currentToken.Type == TokenType.KW_ELSE)
             {
                 _currentToken = _lexer.GetNextToken();
-                Block();
+                var sentenceList = Block();
+                caseList.Insert(0, new CaseDefaultStatement { Statements = sentenceList });
+                return caseList;
             }
             else if(_currentToken.Type == TokenType.NUMBER_LITERAL)
             {
-                CaseLiteral();
+                var literal = CaseLiteral();
                 if (_currentToken.Type == TokenType.TK_COLON)
                 {
                     _currentToken = _lexer.GetNextToken();
-                    Block();
-                    CaseList();
+                    var sentenceList = Block();
+                    caseList = CaseList(caseList);
+                    caseList.Insert(0, new CaseNonDefaultStatement {Statements = sentenceList, Literals = literal});
+                    return caseList;
                 }
             }
+
+            return caseList;
         }
 
-        private void CaseLiteral()
+        private CaseLiteral CaseLiteral()
         {
-            PascalExpression();
+            var optionCaseList = new CaseLiteralList {LiteralList = new List<NumberNode> {new NumberNode {Value = int.Parse(_currentToken.Lexeme)} }};
+            var numberLiteral = _currentToken.Lexeme;
+            //PascalExpression();
+            _currentToken = _lexer.GetNextToken();
             if (_currentToken.Type == TokenType.TK_RANGE)
             {
                 //_currentToken = _lexer.GetNextToken();
-                RangeList();
+                var rangeLiteral = new List<Range>();
+                RangeList(rangeLiteral, numberLiteral);
+                return new CaseLiteralRange {LiteralRanges = rangeLiteral};
             }
             else if (_currentToken.Type == TokenType.TK_COMMA)
             {
                 //_currentToken = _lexer.GetNextToken();
+                var numberLiteralList = new List<NumberNode> {new NumberNode {Value = int.Parse(numberLiteral)}};
                 var expressionList = new List<ExpressionNode>();
                 OptionalExpressionList(expressionList);
+                foreach (var expressionNode in expressionList) numberLiteralList.Add((NumberNode)expressionNode);
+                
+                return new CaseLiteralList {LiteralList = numberLiteralList};
             }
+
+            return optionCaseList;
         }
 
-        public void DeclareType()
+        public TypeDeclarationNode DeclareType()
         {
             if (_currentToken.Type == TokenType.ID)
             {
+                var typeName = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
                 if (_currentToken.Type == TokenType.EQUAL)
                 {
                     _currentToken = _lexer.GetNextToken();
-                    Type();
+                    var type = Type();
+                    type.TypeName = typeName;
+                    return type;
                 }
                 else
                 {
@@ -882,39 +900,44 @@ namespace PascalWebCompiler.Syntactic
             return listNodes;
         }
 
-        private void OptionalRangeList()
+        private void OptionalRangeList(List<Range> rangeList)
         {
             if (_currentToken.Type == TokenType.TK_COMMA)
             {
                 _currentToken = _lexer.GetNextToken();
                 if(_currentToken.Type != TokenType.NUMBER_LITERAL)
                     throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: 'NUMBER_LITERAL' Column: {_currentToken.Column} Row: {_currentToken.Row}");
-
+                var inferiorLimit = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
-                RangeList();
+                RangeList(rangeList, inferiorLimit);
             }
         }
 
-        public void Type()
+        public TypeDeclarationNode Type()
         {
             if (_currentToken.Type == TokenType.TK_LEFTPARENTHESIS)
             {
                 _currentToken = _lexer.GetNextToken();
-                EnumeratedTypes();
+                return EnumeratedTypes();
             }
             else if (_currentToken.Type == TokenType.ID)
             {
+                var typeDefName = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
+                return new TypeDefNode {TypeName = typeDefName};
             }
             else if (_currentToken.Type == TokenType.KW_RECORD)
             {
                 _currentToken = _lexer.GetNextToken();
-                Record();
+                var propertyList = new List<TypeDeclarationNode>();
+                Record(propertyList);
+                return new RecordNode {RecordProperties = propertyList};
+
             }
             else if (_currentToken.Type == TokenType.KW_ARRAY)
             {
                 _currentToken = _lexer.GetNextToken();
-                Array();
+                return Array();
             }
             else
             {
@@ -922,12 +945,17 @@ namespace PascalWebCompiler.Syntactic
             }
         }
 
-        public void EnumeratedTypes()
+        public EnumeratedTypeNode EnumeratedTypes()
         {
-            IdList(new List<IdNode>());
+            var enumListNode = new List<IdNode>();
+            enumListNode = IdList(enumListNode);
+            var enumList = new List<string>();
+            foreach (var idNode in enumListNode) enumList.Add(idNode.Value); //easier ugly way
+            
             if (_currentToken.Type == TokenType.TK_RIGHTPARENTHESIS)
             {
                 _currentToken = _lexer.GetNextToken();
+                return new EnumeratedTypeNode {EnumList = enumList};
             }
             else
             {
@@ -935,43 +963,58 @@ namespace PascalWebCompiler.Syntactic
             }
         }
 
-        public void Record()
+        public void Record(List<TypeDeclarationNode> propertyList)
         {
 
-            RecordPropertyList();
+            RecordPropertyList(propertyList);
          
         }
 
-        private void RecordPropertyList()
+        private void RecordPropertyList(List<TypeDeclarationNode> propertyList)
         {
-            IdList(new List<IdNode>());
-            if (_currentToken.Type == TokenType.TK_COLON)
+            //IdList(new List<IdNode>());
+            if (_currentToken.Type == TokenType.ID)
             {
+                var propertyName = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
-                RecordType();
-                if ( _currentToken.Type != TokenType.KW_END)
+                if (_currentToken.Type == TokenType.TK_COLON)
                 {
-                    RecordPropertyList();
+                    _currentToken = _lexer.GetNextToken();
+                    var recordProperty = RecordType();
+                    recordProperty.TypeName = propertyName;
+                    propertyList.Insert(0, recordProperty);
+                    if (_currentToken.Type != TokenType.KW_END)
+                    {
+                        RecordPropertyList(propertyList);
+                    }
+                    else
+                    {
+                        _currentToken = _lexer.GetNextToken();
+                    }
                 }
                 else
                 {
-                    _currentToken = _lexer.GetNextToken();
+                    throw new SyntaxException(
+                        $"Unexpected RecordPropertyList Token: {_currentToken.Lexeme} Expected: ':' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
                 }
             }
             else
             {
-                throw new SyntaxException($"Unexpected RecordPropertyList Token: {_currentToken.Lexeme} Expected: ':' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                throw new SyntaxException(
+                        $"RecordPropertyName Unexpected RecordPropertyList Token: {_currentToken.Lexeme} Expected: ':' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
             }
         }
 
-        private void RecordType()
+        private TypeDeclarationNode RecordType()
         {
             if (_currentToken.Type == TokenType.ID)
             {
+                var typeName = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
                 if (_currentToken.Type == TokenType.EOS)
                 {
                     _currentToken = _lexer.GetNextToken();
+                    return new TypeDefNode {TypeId = typeName};
                 }
                 else
                 {
@@ -981,10 +1024,11 @@ namespace PascalWebCompiler.Syntactic
             else if (_currentToken.Type == TokenType.TK_LEFTPARENTHESIS)
             {
                 _currentToken = _lexer.GetNextToken();
-                EnumeratedTypes();
+                var enumProperty = EnumeratedTypes();
                 if (_currentToken.Type == TokenType.EOS)
                 {
                     _currentToken = _lexer.GetNextToken();
+                    return enumProperty;
                 }
                 else
                 {
@@ -994,10 +1038,11 @@ namespace PascalWebCompiler.Syntactic
             else if (_currentToken.Type == TokenType.KW_ARRAY)
             {
                 _currentToken = _lexer.GetNextToken();
-                Array();
+                var arrayProperty = Array();
                 if (_currentToken.Type == TokenType.EOS)
                 {
                     _currentToken = _lexer.GetNextToken();
+                    return arrayProperty;
                 }
                 else
                 {
@@ -1007,7 +1052,9 @@ namespace PascalWebCompiler.Syntactic
             else if (_currentToken.Type == TokenType.KW_RECORD)
             {
                 _currentToken = _lexer.GetNextToken();
-                Record();
+                var propertyList = new List<TypeDeclarationNode>();
+                Record(propertyList);
+                return new RecordNode {RecordProperties = propertyList};
             }
             else
             {
@@ -1015,20 +1062,22 @@ namespace PascalWebCompiler.Syntactic
             }
         }
 
-        public void Array()
+        public ArrayNode Array()
         {
             if (_currentToken.Type == TokenType.TK_LEFTBRACKET)
             {
+                var rangeList = new List<Range>();
                 _currentToken = _lexer.GetNextToken();
                 if (_currentToken.Type == TokenType.NUMBER_LITERAL)
                 {
+                    var inferiorLimit = _currentToken.Lexeme;
                     _currentToken = _lexer.GetNextToken();
-                    RangeList();
+                    RangeList(rangeList, inferiorLimit);
                 }
-                else if(_currentToken.Type == TokenType.ID)
-                {
-                    _currentToken = _lexer.GetNextToken();
-                }
+                //else if(_currentToken.Type == TokenType.ID)
+                //{
+                //    _currentToken = _lexer.GetNextToken();
+                //}
                 
                 if (_currentToken.Type == TokenType.TK_RIGHTBRACKET)
                 {
@@ -1036,7 +1085,8 @@ namespace PascalWebCompiler.Syntactic
                     if (_currentToken.Type == TokenType.KW_OF)
                     {
                         _currentToken = _lexer.GetNextToken();
-                        ArrayTypes();
+                        var arrayType = ArrayTypes();
+                        return new ArrayNode {ArrayType = arrayType, Ranges = rangeList};
                     }
                     else
                     {
@@ -1056,31 +1106,37 @@ namespace PascalWebCompiler.Syntactic
             }
         }
 
-        private void ArrayTypes()
+        private string ArrayTypes()
         {
             if (_currentToken.Type == TokenType.ID)
             {
+                var idType = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
+                return idType;
             }
-            else if (_currentToken.Type == TokenType.KW_ARRAY)
+            /*else if (_currentToken.Type == TokenType.KW_ARRAY)
             {
                 _currentToken = _lexer.GetNextToken();
                 Array();
             }
             else if(_currentToken.Type == TokenType.NUMBER_LITERAL)
             {
+                var inferiorLimit = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
-                Range();
-            }
+                var arrayRangeList = new List<Range>();
+                Range(arrayRangeList, inferiorLimit);
+                return 
+            }*/
+            throw new SyntaxException($"ArrayType Unexpected Token: {_currentToken.Lexeme} Expected: 'id' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
         }
 
-        private void RangeList()
+        private void RangeList(List<Range> rangeList, string numberLiteral)
         {
-            Range();
-            OptionalRangeList();
+            rangeList = Range(rangeList, numberLiteral);
+            OptionalRangeList(rangeList);
         }
 
-        private void Range()
+        private List<Range> Range(List<Range> rangeList, string numberLiteral)
         {
             
             if (_currentToken.Type == TokenType.TK_RANGE)
@@ -1090,9 +1146,11 @@ namespace PascalWebCompiler.Syntactic
                 {
                     throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: 'NUMBER_LITERAL' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
                 }
-
+                var superiorLimit = _currentToken.Lexeme;
+                var range = new Range { InferiorLimit = new NumberNode { Value = int.Parse(numberLiteral)}, SuperiorLimit = new NumberNode { Value = int.Parse(superiorLimit) } };
+                rangeList.Insert(0, range);
                 _currentToken = _lexer.GetNextToken();
-
+                return rangeList;
             }
             else
             {
@@ -1113,7 +1171,7 @@ namespace PascalWebCompiler.Syntactic
         {
             if (_currentToken.Type == TokenType.ID)
             {
-                idList.Add(new IdNode {Value = _currentToken.Lexeme});
+                idList.Insert(0, new IdNode {Value = _currentToken.Lexeme});
                 _currentToken = _lexer.GetNextToken();
                 return OptionalId(idList);
             }
@@ -1426,7 +1484,7 @@ namespace PascalWebCompiler.Syntactic
                 _currentToken = _lexer.GetNextToken();
                 if (_currentToken.Type == TokenType.ID)
                 {
-                    var idNode = new IdNode() {Value = _currentToken.Lexeme};
+                    var idNode = new IdNode{Value = _currentToken.Lexeme};
                     _currentToken = _lexer.GetNextToken();
                     accessorList.Insert(0, new PropertyAccesorNode() { IdNode = idNode });
                     accessorList = IndexingAndAccess(accessorList);

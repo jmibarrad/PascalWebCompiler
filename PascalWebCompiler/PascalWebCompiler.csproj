@@ -53,8 +53,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Lexer\Symbol.cs" />
     <Compile Include="Lexer\Token.cs" />
-    <Compile Include="Syntactic\Tree\BreakNode.cs" />
-    <Compile Include="Syntactic\Tree\ContinueNode.cs" />
+    <Compile Include="Syntactic\Tree\Case\CaseNode.cs" />
+    <Compile Include="Syntactic\Tree\Case\CaseDefaultStatement.cs" />
+    <Compile Include="Syntactic\Tree\Case\CaseLiteralList.cs" />
+    <Compile Include="Syntactic\Tree\Case\CaseLiteralRange.cs" />
+    <Compile Include="Syntactic\Tree\Case\CaseNonDefaultStatement.cs" />
+    <Compile Include="Syntactic\Tree\Case\CaseStatement.cs" />
+    <Compile Include="Syntactic\Tree\DeclareType\IRecordProperty.cs" />
+    <Compile Include="Syntactic\Tree\Loops\BreakNode.cs" />
+    <Compile Include="Syntactic\Tree\Case\CaseLiteral.cs" />
+    <Compile Include="Syntactic\Tree\Loops\ContinueNode.cs" />
     <Compile Include="Syntactic\Tree\Expression\IdNode.cs" />
     <Compile Include="Syntactic\Tree\Operators\NotNode.cs" />
     <Compile Include="Syntactic\Tree\Expression\NumberNode.cs" />
@@ -102,6 +110,7 @@
     <Compile Include="Syntactic\Tree\Operators\Sub.cs" />
     <Compile Include="Syntactic\Tree\Operators\Sum.cs" />
     <Compile Include="Syntactic\Tree\Loops\RepeatNode.cs" />
+    <Compile Include="Syntactic\Tree\DeclareType\Range.cs" />
     <Compile Include="Syntactic\Tree\SentenceNode.cs" />
     <Compile Include="Syntactic\Tree\DeclareType\TypeDeclarationNode.cs" />
     <Compile Include="Syntactic\Tree\Loops\WhileNode.cs" />
