@@ -1,7 +1,9 @@
+using PascalWebCompiler.Semantic.Types;
+
 namespace PascalWebCompiler.Syntactic.Tree.ID
 {
-    public class AccesorNode
+    public abstract class AccesorNode
     {
-
+        public abstract BaseType Validate(BaseType type);
     }
 }

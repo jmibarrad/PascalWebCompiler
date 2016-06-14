@@ -7,5 +7,14 @@ namespace PascalWebCompiler.Syntactic.Tree.Loops
         public IdNode IdNode;
         public IdNode IdNodeCollection;
 
+        public override void ValidateNodeSemantic()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override string GenerateCode()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -71,7 +71,9 @@
         REAL_LITERAL,
         KW_TO,
         KW_BREAK,
-        KW_CONTINUE
+        KW_CONTINUE,
+        KW_TRUE,
+        KW_FALSE
     }
 
     public class Token

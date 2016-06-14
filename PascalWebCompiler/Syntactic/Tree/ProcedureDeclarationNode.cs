@@ -8,5 +8,14 @@ namespace PascalWebCompiler.Syntactic.Tree
         public string ProcedureName;
         public List<SentenceNode> Statements;
         public List<Param> Parameters;
+        public override void ValidateNodeSemantic()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override string GenerateCode()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

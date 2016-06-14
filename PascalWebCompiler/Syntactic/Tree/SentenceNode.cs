@@ -1,7 +1,8 @@
 ﻿namespace PascalWebCompiler.Syntactic.Tree
 {
-    public class SentenceNode
+    public abstract class SentenceNode
     {
-
+        public abstract void ValidateNodeSemantic();
+        public abstract string GenerateCode();
     }
 }

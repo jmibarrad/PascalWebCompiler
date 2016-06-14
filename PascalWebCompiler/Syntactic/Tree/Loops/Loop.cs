@@ -2,8 +2,14 @@
 
 namespace PascalWebCompiler.Syntactic.Tree.Loops
 {
-    public class Loop : SentenceNode
+    public abstract class Loop : SentenceNode
     {
          public List<SentenceNode> Statements;
+        public abstract override void ValidateNodeSemantic();
+
+        public override string GenerateCode()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

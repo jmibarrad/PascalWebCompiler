@@ -289,7 +289,10 @@ namespace PascalWebCompiler.Syntactic
                     var type = _currentToken.Lexeme;
                     _currentToken = _lexer.GetNextToken();
                     var expression = AssignValue();
-                    return new DeclarationAssignNode {IdNode = new IdNode {Value = idNode.Value}, Value = expression, Type = type};
+                    if (expression != null)
+                        return new DeclarationAssignNode { IdNode = new IdNode { Value = idNode.Value }, Value = expression, Type = type };
+
+                    return new OnlyDeclarationNode { IdNodesList = new List<IdNode> {idNode} , Type = type };
                 }
                 else
                 {
@@ -924,7 +927,7 @@ namespace PascalWebCompiler.Syntactic
             {
                 var typeDefName = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
-                return new TypeDefNode {TypeName = typeDefName};
+                return new TypeDefNode {TypeId = typeDefName};
             }
             else if (_currentToken.Type == TokenType.KW_RECORD)
             {
@@ -998,11 +1001,11 @@ namespace PascalWebCompiler.Syntactic
                         $"Unexpected RecordPropertyList Token: {_currentToken.Lexeme} Expected: ':' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
                 }
             }
-            else
-            {
-                throw new SyntaxException(
-                        $"RecordPropertyName Unexpected RecordPropertyList Token: {_currentToken.Lexeme} Expected: ':' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
-            }
+            //else
+            //{
+            //    throw new SyntaxException(
+            //            $"RecordPropertyName Unexpected RecordPropertyList Token: {_currentToken.Lexeme} Expected: ':' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+            //}
         }
 
         private TypeDeclarationNode RecordType()
@@ -1300,6 +1303,16 @@ namespace PascalWebCompiler.Syntactic
                 var value = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
                 return new RealNode { Value = float.Parse(value) };
+            }
+            else if (_currentToken.Type == TokenType.KW_TRUE)
+            {
+                _currentToken = _lexer.GetNextToken();
+                return new BooleanNode { Value = true };
+            }
+            else if (_currentToken.Type == TokenType.KW_FALSE)
+            {
+                _currentToken = _lexer.GetNextToken();
+                return new BooleanNode { Value = false };
             }
             else if (_currentToken.Type == TokenType.ID)
             {

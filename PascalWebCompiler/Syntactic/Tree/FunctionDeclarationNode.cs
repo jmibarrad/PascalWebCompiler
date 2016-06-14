@@ -10,5 +10,14 @@ namespace PascalWebCompiler.Syntactic.Tree
         public List<Param> Parameters;
         public string Type;
 
+        public override void ValidateNodeSemantic()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override string GenerateCode()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

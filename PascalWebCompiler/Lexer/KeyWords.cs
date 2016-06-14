@@ -38,7 +38,9 @@ namespace PascalWebCompiler.Lexer
             { "var", TokenType.KW_VAR },
             { "type", TokenType.KW_TYPE },
             { "to", TokenType.KW_TO },
-            { "repeat", TokenType.KW_REPEAT }
+            { "repeat", TokenType.KW_REPEAT },
+            { "true", TokenType.KW_TRUE },
+            { "false", TokenType.KW_FALSE }
 
         };
 
