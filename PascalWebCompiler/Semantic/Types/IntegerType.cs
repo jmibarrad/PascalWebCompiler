@@ -6,5 +6,10 @@
         {
             return otherType is IntegerType;
         }
+
+        public override string ToString()
+        {
+            return "Integer";
+        }
     }
 }

@@ -6,5 +6,10 @@ namespace PascalWebCompiler.Semantic.Types
         {
             return otherType is BooleanType;
         }
+
+        public override string ToString()
+        {
+            return "Boolean";
+        }
     }
 }

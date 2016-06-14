@@ -6,5 +6,10 @@
         {
             return otherType is EnumType;
         }
+
+        public override string ToString()
+        {
+            return "Enum";
+        }
     }
 }

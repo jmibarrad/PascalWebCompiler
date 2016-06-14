@@ -6,5 +6,10 @@
         {
             return otherType is ArrayType;
         }
+
+        public override string ToString()
+        {
+            return "Array";
+        }
     }
 }

@@ -6,5 +6,10 @@
         {
             return otherType is TypeDefType;
         }
+
+        public override string ToString()
+        {
+            return "TypeDef";
+        }
     }
 }

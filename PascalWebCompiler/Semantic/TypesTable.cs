@@ -16,12 +16,13 @@ namespace PascalWebCompiler.Semantic
             _table.Add("string", new StringType());
             _table.Add("real", new RealType());
             _table.Add("boolean", new BooleanType());
-
+            _table.Add("array", new ArrayType());
+            _table.Add("enum", new EnumType());
+            _table.Add("record", new RecordType());
+            //_table.Add("typedef", new TypeDefType());
         }
 
-
         public static TypesTable Instance => _instance ?? (_instance = new TypesTable());
-
 
         public void RegisterType(string name, BaseType baseType)
         {

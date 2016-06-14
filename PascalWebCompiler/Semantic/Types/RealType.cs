@@ -7,5 +7,10 @@
             return otherType is RealType;
 
         }
+
+        public override string ToString()
+        {
+            return "Real";
+        }
     }
 }

@@ -1,3 +1,4 @@
+using PascalWebCompiler.Semantic;
 using PascalWebCompiler.Semantic.Types;
 
 namespace PascalWebCompiler.Syntactic.Tree.Expression
@@ -6,7 +7,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Expression
     {
         public override BaseType ValidateSemantic()
         {
-            return new BooleanType();
+            return TypesTable.Instance.GetType("boolean");
         }
 
         public override string GenerateCode()

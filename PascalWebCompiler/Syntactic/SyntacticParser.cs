@@ -9,7 +9,8 @@ using PascalWebCompiler.Syntactic.Tree.DeclareType;
 using PascalWebCompiler.Syntactic.Tree.Expression;
 using PascalWebCompiler.Syntactic.Tree.ID;
 using PascalWebCompiler.Syntactic.Tree.Loops;
-using PascalWebCompiler.Syntactic.Tree.Operators;
+using PascalWebCompiler.Syntactic.Tree.Operators.Arithmethic;
+using PascalWebCompiler.Syntactic.Tree.Operators.Relational;
 using PascalWebCompiler.Syntactic.Tree.Params;
 
 namespace PascalWebCompiler.Syntactic

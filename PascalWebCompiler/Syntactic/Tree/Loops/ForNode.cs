@@ -1,5 +1,4 @@
 ﻿using PascalWebCompiler.Exceptions;
-using PascalWebCompiler.Semantic;
 using PascalWebCompiler.Semantic.Types;
 using PascalWebCompiler.Syntactic.Tree.Expression;
 

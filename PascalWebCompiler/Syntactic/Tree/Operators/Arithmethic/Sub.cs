@@ -1,8 +1,7 @@
 using System;
-using PascalWebCompiler.Exceptions;
 using PascalWebCompiler.Semantic.Types;
 
-namespace PascalWebCompiler.Syntactic.Tree.Operators
+namespace PascalWebCompiler.Syntactic.Tree.Operators.Arithmethic
 {
     public class Sub : BinaryOperator
     {
@@ -19,17 +18,9 @@ namespace PascalWebCompiler.Syntactic.Tree.Operators
             throw new NotImplementedException();
         }
 
-        public override BaseType ValidateSemantic()
+        public override string SemanticError(BaseType leftType, BaseType rightType)
         {
-            var leftType = LeftOperand.ValidateSemantic();
-            var rightType = RightOperand.ValidateSemantic();
-            var key = new Tuple<BaseType, BaseType>(leftType, rightType);
-            if (OperatorRules.ContainsKey(key))
-            {
-                return OperatorRules[key];
-            }
-
-            throw new SemanticException($"Substraction is not supported for {leftType} and {rightType}");
+            return $"Substraction is not supported between {leftType} and {rightType} types.";
         }
     }
 }

@@ -14,6 +14,11 @@ namespace PascalWebCompiler.Semantic.Types
             return otherType is RecordType;
         }
 
+        public override string ToString()
+        {
+            return "Record";
+        }
+
         public Dictionary<string, BaseType> Properties { get; set; }
     }
 }

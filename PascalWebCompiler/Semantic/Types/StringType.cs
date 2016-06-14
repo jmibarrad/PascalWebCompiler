@@ -6,5 +6,10 @@
         {
             return otherType is StringType;
         }
+
+        public override string ToString()
+        {
+            return "String";
+        }
     }
 }
