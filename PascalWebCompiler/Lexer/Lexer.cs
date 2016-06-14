@@ -182,6 +182,11 @@ namespace PascalWebCompiler.Lexer
                             state = 2;
                             lexeme += _currentSymbol.CurrentSymbol;
                             _currentSymbol = Content.NextSymbol();
+                        }else if (_currentSymbol.CurrentSymbol == '.')
+                        {
+                            state = 24;
+                            lexeme += _currentSymbol.CurrentSymbol;
+                            _currentSymbol = Content.NextSymbol();
                         }
                         else
                         {

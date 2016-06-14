@@ -8,7 +8,7 @@ namespace PascalWebCompiler.Syntactic.Tree
     public class IfNode : SentenceNode
     {
         public ExpressionNode Condition;
-        public List<SentenceNode> FalseStaments;
+        public List<SentenceNode> FalseStaments = new List<SentenceNode>();
         public List<SentenceNode> TruStatements;
         public override void ValidateNodeSemantic()
         {
