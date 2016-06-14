@@ -65,6 +65,8 @@
     <Compile Include="Semantic\Types\RecordType.cs" />
     <Compile Include="Semantic\Types\StringType.cs" />
     <Compile Include="Semantic\Types\TypeDefType.cs" />
+    <Compile Include="Syntactic\Tree\DeclareConstants\ConstOnlyDeclareNode.cs" />
+    <Compile Include="Syntactic\Tree\DeclareConstants\ConstWithTypeNode.cs" />
     <Compile Include="Syntactic\Tree\Expression\BooleanNode.cs" />
     <Compile Include="Syntactic\Tree\Case\CaseNode.cs" />
     <Compile Include="Syntactic\Tree\Case\CaseDefaultStatement.cs" />

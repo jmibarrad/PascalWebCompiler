@@ -2,28 +2,12 @@
 
 namespace PascalWebCompiler.Syntactic.Tree.DeclareConstants
 {
-    public class ConstNode : SentenceNode
+    public abstract class ConstNode : SentenceNode
     {
         public IdNode IdNode;
         public ExpressionNode Expression;
-        public override void ValidateNodeSemantic()
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract override void ValidateNodeSemantic();
 
-        public override string GenerateCode()
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract override string GenerateCode();
     }
-
-    public class ConstWithTypeNode : ConstNode
-    {
-        public string Type;
-    }
-    public class ConstOnlyDeclareNode : ConstNode
-    {
-
-    }
-
 }

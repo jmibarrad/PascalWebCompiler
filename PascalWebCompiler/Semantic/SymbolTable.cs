@@ -6,14 +6,15 @@ namespace PascalWebCompiler.Semantic
 {
     public class SymbolTable
     {
-        private Dictionary<string, BaseType> _table;
+        private readonly Dictionary<string, BaseType> _table;
+        private readonly List<string> _constants;
         private static SymbolTable _instance;
 
 
         private SymbolTable()
         {
             _table = new Dictionary<string, BaseType>();
-
+            _constants = new List<string>();
         }
 
         public static SymbolTable Instance => _instance ?? (_instance = new SymbolTable());
@@ -59,14 +60,24 @@ namespace PascalWebCompiler.Semantic
                 }
                 if (_table.ContainsKey(value))
                 {
-                    throw new SemanticException($"Variable :{value} exists.");
+                    throw new SemanticException($"Variable: {value} already exists.");
                 }
 
                 if (TypesTable.Instance.Contains(value))
-                    throw new SemanticException($"  :{value} iz a taippp.");
+                    throw new SemanticException($"{value} it's a type.");
 
                 _table.Add(value, type);
             }
+        }
+
+        public void AddConstant(string value)
+        {
+            _constants.Add(value);
+        }
+
+        public bool GetConstant(string value)
+        {
+            return _constants.Contains(value);
         }
     }
 
