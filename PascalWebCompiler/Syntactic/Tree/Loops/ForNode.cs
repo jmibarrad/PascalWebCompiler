@@ -16,7 +16,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Loops
             if (!(validateSemantic is IntegerType)) throw new SemanticException("Not an Integer type.");
 
             var counterValueType = validateSemantic.IsAssignable(CounterValue.ValidateSemantic());
-            if (!counterValueType) throw new SemanticException("Value cant be assign");
+            if (!counterValueType) throw new SemanticException("Value can't be assign.");
 
             if (Condition.ValidateSemantic() is IntegerType)
             {
@@ -27,7 +27,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Loops
             }
             else
             {
-                throw new SemanticException("Not an integer type");
+                throw new SemanticException("Not an integer type.");
             }
         }
 

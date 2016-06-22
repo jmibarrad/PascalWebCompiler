@@ -7,9 +7,6 @@ namespace PascalWebCompiler.Syntactic.Tree.Loops
          public List<SentenceNode> Statements;
         public abstract override void ValidateNodeSemantic();
 
-        public override string GenerateCode()
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract override string GenerateCode();
     }
 }

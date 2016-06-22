@@ -188,7 +188,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 37
 this.ScenarioSetup(scenarioInfo);
 #line 38
- testRunner.Given("the following source code \'<%type myArray = array [1..2] of integer;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("the following source code \'<%type myArray = array [1 .. 2] of integer;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 39
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 40
@@ -296,7 +296,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 67
 this.ScenarioSetup(scenarioInfo);
 #line 68
- testRunner.Given("the following source code \'<%type array2 = array [1..3, 1..5] of integer;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("the following source code \'<%type array2 = array [1 .. 3, 1 .. 5] of integer;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 69
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 70
@@ -314,8 +314,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 72
 this.ScenarioSetup(scenarioInfo);
 #line 73
- testRunner.Given("the following source code \'<%type simpleintegerarray = array [4..33, 34..99] of i" +
-                    "nteger;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("the following source code \'<%type simpleintegerarray = array [4 .. 33, 34 .. 99] " +
+                    "of integer;%>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 74
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 75
@@ -333,9 +333,9 @@ this.ScenarioSetup(scenarioInfo);
 #line 77
 this.ScenarioSetup(scenarioInfo);
 #line 78
- testRunner.Given("the following source code \'<%case c of 1..4 : s := \'lowercase letter (a-z)\'; 100." +
-                    ".100 : s := \'lowercase letter (a-z)\'; 7.. 6 : s := \'lowercase letter (a-z)\';\t400" +
-                    ": s := \'400 case\'; end; %>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("the following source code \'<%case c of 1 .. 4 : s := \'lowercase letter (a-z)\'; 10" +
+                    "0 .. 100 : s := \'lowercase letter (a-z)\'; 7 .. 6 : s := \'lowercase letter (a-z)\'" +
+                    ";\t400: s := \'400 case\'; end; %>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 79
  testRunner.When("We Parse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 80

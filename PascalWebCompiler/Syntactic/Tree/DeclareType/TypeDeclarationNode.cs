@@ -7,10 +7,7 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
         public string TypeName;
         public abstract override void ValidateNodeSemantic();
 
-        public override string GenerateCode()
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract override string GenerateCode();
 
         public abstract BaseType GetBaseType();
     }

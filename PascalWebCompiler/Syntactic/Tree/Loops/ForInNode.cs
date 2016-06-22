@@ -1,4 +1,6 @@
-﻿using PascalWebCompiler.Syntactic.Tree.Expression;
+﻿using PascalWebCompiler.Exceptions;
+using PascalWebCompiler.Semantic.Types;
+using PascalWebCompiler.Syntactic.Tree.Expression;
 
 namespace PascalWebCompiler.Syntactic.Tree.Loops
 {
@@ -9,7 +11,20 @@ namespace PascalWebCompiler.Syntactic.Tree.Loops
 
         public override void ValidateNodeSemantic()
         {
-            throw new System.NotImplementedException();
+            var validateSemantic = IdNode.ValidateSemantic();
+            if (!(validateSemantic is IntegerType)) throw new SemanticException("Not an Integer type.");
+
+            if (IdNodeCollection.ValidateSemantic() is ArrayType)
+            {
+                foreach (var sentenceNode in Statements)
+                {
+                    sentenceNode.ValidateNodeSemantic();
+                }
+            }
+            else
+            {
+                throw new SemanticException("Not an iterable variable.");
+            }
         }
 
         public override string GenerateCode()

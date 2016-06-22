@@ -8,7 +8,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Expression
     public class IdNode : ExpressionNode
     {
         public string Value;
-        public List<AccesorNode> Accesors = new List<AccesorNode>();
+        public List<AccessorNode> Accesors = new List<AccessorNode>();
 
         public override BaseType ValidateSemantic()
         {

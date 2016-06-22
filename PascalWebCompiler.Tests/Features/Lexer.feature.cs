@@ -688,7 +688,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 148
 this.ScenarioSetup(scenarioInfo);
 #line 149
- testRunner.Given("I have an input of \'<%myArray := array[1..10] of integer;\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have an input of \'<%myArray := array[1 .. 10] of integer;\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 150
  testRunner.When("We Tokenize", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
@@ -725,37 +725,37 @@ this.ScenarioSetup(scenarioInfo);
             table17.AddRow(new string[] {
                         "TK_RANGE",
                         "..",
-                        "20",
+                        "21",
                         "0"});
             table17.AddRow(new string[] {
                         "NUMBER_LITERAL",
                         "10",
-                        "22",
+                        "24",
                         "0"});
             table17.AddRow(new string[] {
                         "TK_RIGHTBRACKET",
                         "]",
-                        "24",
+                        "26",
                         "0"});
             table17.AddRow(new string[] {
                         "KW_OF",
                         "of",
-                        "26",
+                        "28",
                         "0"});
             table17.AddRow(new string[] {
                         "ID",
                         "integer",
-                        "29",
+                        "31",
                         "0"});
             table17.AddRow(new string[] {
                         "EOS",
                         ";",
-                        "36",
+                        "38",
                         "0"});
             table17.AddRow(new string[] {
                         "EOF",
                         "$",
-                        "37",
+                        "39",
                         "0"});
 #line 151
  testRunner.Then("the result should be", ((string)(null)), table17, "Then ");

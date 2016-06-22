@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PascalWebCompiler.Semantic;
 using PascalWebCompiler.Semantic.Types;
 
 namespace PascalWebCompiler.Syntactic.Tree.DeclareType
@@ -10,7 +11,7 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
 
         public override void ValidateNodeSemantic()
         {
-            throw new System.NotImplementedException();
+            SymbolTable.Instance.DeclareVariable(TypeName, ArrayType, Ranges);
         }
 
         public override string GenerateCode()
@@ -20,7 +21,12 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
 
         public override BaseType GetBaseType()
         {
-            throw new System.NotImplementedException();
+            var type = TypesTable.Instance.GetType(ArrayType);
+            foreach (var range in Ranges)
+            {
+                type = new ArrayType { InferiorLimit = range.InferiorLimit.Value, SuperiorLimit = range.SuperiorLimit.Value, Type = type };
+            }
+            return type;
         }
     }
 }

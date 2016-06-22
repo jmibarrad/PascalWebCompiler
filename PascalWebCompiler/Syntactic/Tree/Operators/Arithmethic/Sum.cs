@@ -15,7 +15,9 @@ namespace PascalWebCompiler.Syntactic.Tree.Operators.Arithmethic
             OperatorRules.Add(new Tuple<BaseType, BaseType>(RealType, RealType), RealType);
             OperatorRules.Add(new Tuple<BaseType, BaseType>(RealType, IntegerType), RealType);
             OperatorRules.Add(new Tuple<BaseType, BaseType>(IntegerType, RealType), RealType);
-
+            OperatorRules.Add(new Tuple<BaseType, BaseType>(CharType, CharType), StringType);
+            OperatorRules.Add(new Tuple<BaseType, BaseType>(CharType, IntegerType), StringType);
+            OperatorRules.Add(new Tuple<BaseType, BaseType>(IntegerType, CharType), StringType);
         }
         public override string GenerateCode()
         {

@@ -12,8 +12,11 @@ namespace PascalWebCompiler.Syntactic.Tree
         public override void ValidateNodeSemantic()
         {
             var idType = ValueIdNode.ValidateSemantic();
+            var expressionType = Value.ValidateSemantic();
 
-            if (idType != Value.ValidateSemantic()) throw new SemanticException("Type Mismatch Exception");
+            
+
+            if (!idType.IsAssignable(expressionType)) throw new SemanticException("Type Mismatch Exception");
             if (SymbolTable.Instance.GetConstant(ValueIdNode.Value)) throw new SemanticException($"Constant variable: {ValueIdNode.Value} can't be assign.");
         }
 

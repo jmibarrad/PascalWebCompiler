@@ -1,15 +1,15 @@
 ﻿namespace PascalWebCompiler.Semantic.Types
 {
-    public class StringType : BaseType
+    public class CharType: BaseType
     {
         public override bool IsAssignable(BaseType otherType)
         {
-            return otherType is StringType || otherType is CharType;
+            return otherType is CharType;
         }
 
         public override string ToString()
         {
-            return "String";
+            return "Char";
         }
     }
 }

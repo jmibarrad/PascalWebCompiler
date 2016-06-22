@@ -14,6 +14,7 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
             foreach (var enumNode in EnumList)
             {
                 SymbolTable.Instance.DeclareVariable(enumNode, TypeName);
+                SymbolTable.Instance.AddConstant(enumNode);
             }
         }
 
@@ -28,6 +29,8 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
             foreach (var enumNode in EnumList)
             {
                 SymbolTable.Instance.DeclareVariable(enumNode, TypeName);
+                SymbolTable.Instance.AddConstant(enumNode);
+
             }
             return new EnumType();
         }

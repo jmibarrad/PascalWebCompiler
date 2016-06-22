@@ -9,6 +9,8 @@ namespace PascalWebCompiler.Syntactic.Tree.Expression
         public BaseType StringType = TypesTable.Instance.GetType("string");
         public BaseType RealType = TypesTable.Instance.GetType("real");
         public BaseType BooleanType = TypesTable.Instance.GetType("boolean");
+        public BaseType CharType = TypesTable.Instance.GetType("char");
+
         public abstract BaseType ValidateSemantic();
         public abstract string GenerateCode();
     }

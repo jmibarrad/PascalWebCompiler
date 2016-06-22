@@ -11,14 +11,17 @@ namespace PascalWebCompiler.Semantic
 
         private TypesTable()
         {
-            _table = new Dictionary<string, BaseType>();
-            _table.Add("integer", new IntegerType());
-            _table.Add("string", new StringType());
-            _table.Add("real", new RealType());
-            _table.Add("boolean", new BooleanType());
-            _table.Add("array", new ArrayType());
-            _table.Add("enum", new EnumType());
-            _table.Add("record", new RecordType());
+            _table = new Dictionary<string, BaseType>
+            {
+                {"integer", new IntegerType()},
+                {"char", new IntegerType()},
+                {"string", new StringType()},
+                {"real", new RealType()},
+                {"boolean", new BooleanType()},
+                {"array", new ArrayType()},
+                {"enum", new EnumType()},
+                {"record", new RecordType()}
+            };
             //_table.Add("typedef", new TypeDefType());
         }
 
@@ -28,7 +31,7 @@ namespace PascalWebCompiler.Semantic
         {
             if (_table.ContainsKey(name))
             {
-                throw new SemanticException($"Type :{name} exists.");
+                throw new SemanticException($"Type: {name} exists.");
             }
 
             _table.Add(name, baseType);
@@ -41,7 +44,7 @@ namespace PascalWebCompiler.Semantic
                 return _table[name];
             }
 
-            throw new SemanticException($"Type :{name} doesn't exists.");
+            throw new SemanticException($"Type: {name} doesn't exists.");
         }
 
 

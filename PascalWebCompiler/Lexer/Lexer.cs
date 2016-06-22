@@ -203,7 +203,10 @@ namespace PascalWebCompiler.Lexer
                         {
                             lexeme += _currentSymbol.CurrentSymbol;
                             _currentSymbol = Content.NextSymbol();
-                            return new Token { Type = TokenType.STRING_LITERAL, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
+                            if(lexeme.Length == 1)
+                                return new Token { Type = TokenType.CHAR_LITERAL, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
+                            else if(lexeme.Length > 1)
+                                return new Token { Type = TokenType.STRING_LITERAL, Lexeme = lexeme, Column = tokenColumn, Row = tokenRow };
                         }
 
                         break;

@@ -1,13 +1,14 @@
+using PascalWebCompiler.Semantic;
 using PascalWebCompiler.Semantic.Types;
 
 namespace PascalWebCompiler.Syntactic.Tree.Expression
 {
     internal class CharLiteralNode : ExpressionNode
     {
-        public char Value { get; set; }
+        public string Value { get; set; }
         public override BaseType ValidateSemantic()
         {
-            throw new System.NotImplementedException();
+            return TypesTable.Instance.GetType("char");
         }
 
         public override string GenerateCode()

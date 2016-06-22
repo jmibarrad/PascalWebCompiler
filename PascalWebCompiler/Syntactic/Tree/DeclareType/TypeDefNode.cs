@@ -14,6 +14,11 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
 
         }
 
+        public override string GenerateCode()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override BaseType GetBaseType()
         {
             return TypesTable.Instance.GetType(TypeId);

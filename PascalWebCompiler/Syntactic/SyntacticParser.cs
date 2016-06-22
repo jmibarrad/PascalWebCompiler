@@ -427,7 +427,7 @@ namespace PascalWebCompiler.Syntactic
             {
                 var collection = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
-                var collectionAccesors = new List<AccesorNode>();
+                var collectionAccesors = new List<AccessorNode>();
                 collectionAccesors = IndexingAndAccess(collectionAccesors);
                 if (_currentToken.Type == TokenType.KW_DO)
                 {
@@ -584,7 +584,7 @@ namespace PascalWebCompiler.Syntactic
             {
                 var caseLexeme = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
-                var accessorList = new List<AccesorNode>();
+                var accessorList = new List<AccessorNode>();
                 accessorList = IndexingAndAccess(accessorList);
                 if (_currentToken.Type == TokenType.KW_OF)
                 {
@@ -864,7 +864,7 @@ namespace PascalWebCompiler.Syntactic
 
         public SentenceNode PreId(string idLexeme)
         {
-            var accessorList = new List<AccesorNode>();
+            var accessorList = new List<AccessorNode>();
             accessorList = IndexingAndAccess(accessorList);
             if (_currentToken.Type == TokenType.TK_LEFTPARENTHESIS)
             {
@@ -1058,7 +1058,15 @@ namespace PascalWebCompiler.Syntactic
                 _currentToken = _lexer.GetNextToken();
                 var propertyList = new List<TypeDeclarationNode>();
                 Record(propertyList);
-                return new RecordNode {RecordProperties = propertyList};
+                if (_currentToken.Type == TokenType.EOS)
+                {
+                    _currentToken = _lexer.GetNextToken();
+                    return new RecordNode { RecordProperties = propertyList };
+                }
+                else
+                {
+                    throw new SyntaxException($"Unexpected Token: {_currentToken.Lexeme} Expected: ';' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                }
             }
             else
             {
@@ -1279,7 +1287,7 @@ namespace PascalWebCompiler.Syntactic
             {
                 var value = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
-                return new CharLiteralNode { Value = value[0] };
+                return new CharLiteralNode { Value = value };
             }
             else if (_currentToken.Type == TokenType.HEX)
             {
@@ -1337,7 +1345,7 @@ namespace PascalWebCompiler.Syntactic
                 }
                 else
                 {
-                    var accessorList = new List<AccesorNode>();
+                    var accessorList = new List<AccessorNode>();
                     accessorList = IndexingAndAccess(accessorList);
                     return new IdNode {Value = idValue, Accesors = accessorList};
                 }
@@ -1475,7 +1483,7 @@ namespace PascalWebCompiler.Syntactic
             return param;
         }
 
-        private List<AccesorNode> IndexingAndAccess(List<AccesorNode> accessorList)
+        private List<AccessorNode> IndexingAndAccess(List<AccessorNode> accessorList)
         {
             if (_currentToken.Type == TokenType.TK_LEFTBRACKET)
             {
@@ -1484,7 +1492,7 @@ namespace PascalWebCompiler.Syntactic
                 if (_currentToken.Type == TokenType.TK_RIGHTBRACKET)
                 {
                     _currentToken = _lexer.GetNextToken();
-                    accessorList.Insert(0, new IndexAccesorNode {IndexExpression = expr});
+                    accessorList.Insert(0, new IndexAccessorNode {IndexExpression = expr});
                     accessorList = IndexingAndAccess(accessorList);
                     return accessorList;
                 }
@@ -1500,7 +1508,7 @@ namespace PascalWebCompiler.Syntactic
                 {
                     var idNode = new IdNode{Value = _currentToken.Lexeme};
                     _currentToken = _lexer.GetNextToken();
-                    accessorList.Insert(0, new PropertyAccesorNode() { IdNode = idNode });
+                    accessorList.Insert(0, new PropertyAccessorNode() { IdNode = idNode });
                     accessorList = IndexingAndAccess(accessorList);
                     return accessorList;
                 }

@@ -146,7 +146,7 @@ Scenario: Input is not equal
 		| EOF				| $				|   12	 | 0   |
 
 Scenario: Input is an assigned array 
-	Given I have an input of '<%myArray := array[1..10] of integer;'
+	Given I have an input of '<%myArray := array[1 .. 10] of integer;'
 	When We Tokenize
 	Then the result should be 
 		| Type				| Lexeme		| Column | Row |
@@ -155,13 +155,13 @@ Scenario: Input is an assigned array
 		| KW_ARRAY			| array			|   13	 | 0   |
 		| TK_LEFTBRACKET	| [				|   18	 | 0   |
 		| NUMBER_LITERAL	| 1				|   19	 | 0   |
-		| TK_RANGE			| ..			|   20	 | 0   |
-		| NUMBER_LITERAL	| 10			|   22	 | 0   |
-		| TK_RIGHTBRACKET	| ]				|   24	 | 0   |
-		| KW_OF				| of			|   26	 | 0   |
-		| ID				| integer		|   29	 | 0   |
-		| EOS				| ;				|   36	 | 0   |
-		| EOF				| $				|   37	 | 0   |
+		| TK_RANGE			| ..			|   21	 | 0   |
+		| NUMBER_LITERAL	| 10			|   24	 | 0   |
+		| TK_RIGHTBRACKET	| ]				|   26	 | 0   |
+		| KW_OF				| of			|   28	 | 0   |
+		| ID				| integer		|   31	 | 0   |
+		| EOS				| ;				|   38	 | 0   |
+		| EOF				| $				|   39	 | 0   |
 
 Scenario: Input is relational operators 
 	Given I have an input of '<%'ham' < 'tam' and or not 'tam' > 'ham''

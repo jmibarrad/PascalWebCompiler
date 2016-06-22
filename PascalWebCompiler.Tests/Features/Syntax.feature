@@ -35,7 +35,7 @@ Scenario: Declare an if else condition
 	Then the result should pass
 
 Scenario: Declaring a native type variable with initial value
-	Given the following source code '<%type myArray = array [1..2] of integer;%>'
+	Given the following source code '<%type myArray = array [1 .. 2] of integer;%>'
 	When We Parse
 	Then the result should pass
 
@@ -65,17 +65,17 @@ Scenario:Declare a record
 	Then the result should pass
 
 Scenario:Declare a bidemensional array 
-	Given the following source code '<%type array2 = array [1..3, 1..5] of integer;%>'
+	Given the following source code '<%type array2 = array [1 .. 3, 1 .. 5] of integer;%>'
 	When We Parse
 	Then the result should pass
 
 Scenario:Declare a bidemensional array #2
-	Given the following source code '<%type simpleintegerarray = array [4..33, 34..99] of integer;%>'
+	Given the following source code '<%type simpleintegerarray = array [4 .. 33, 34 .. 99] of integer;%>'
 	When We Parse
 	Then the result should pass
 
 Scenario:Declare a case
-	Given the following source code '<%case c of 1..4 : s := 'lowercase letter (a-z)'; 100..100 : s := 'lowercase letter (a-z)'; 7.. 6 : s := 'lowercase letter (a-z)';	400: s := '400 case'; end; %>'
+	Given the following source code '<%case c of 1 .. 4 : s := 'lowercase letter (a-z)'; 100 .. 100 : s := 'lowercase letter (a-z)'; 7 .. 6 : s := 'lowercase letter (a-z)';	400: s := '400 case'; end; %>'
 	When We Parse
 	Then the result should pass
 

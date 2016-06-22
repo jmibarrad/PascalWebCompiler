@@ -4,7 +4,7 @@
     {
         public override void ValidateNodeSemantic()
         {
-            throw new System.NotImplementedException();
+            //Nothing
         }
 
         public override string GenerateCode()

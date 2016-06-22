@@ -12,6 +12,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Operators.Relational
             OperatorRules.Add(new Tuple<BaseType, BaseType>(RealType, RealType), BooleanType);
             OperatorRules.Add(new Tuple<BaseType, BaseType>(RealType, IntegerType), BooleanType);
             OperatorRules.Add(new Tuple<BaseType, BaseType>(IntegerType, RealType), BooleanType);
+            OperatorRules.Add(new Tuple<BaseType, BaseType>(CharType, CharType), BooleanType);
         }
         public override string GenerateCode()
         {

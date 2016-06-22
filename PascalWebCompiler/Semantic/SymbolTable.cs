@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using PascalWebCompiler.Exceptions;
 using PascalWebCompiler.Semantic.Types;
+using PascalWebCompiler.Syntactic.Tree.DeclareType;
 
 namespace PascalWebCompiler.Semantic
 {
@@ -21,13 +22,8 @@ namespace PascalWebCompiler.Semantic
 
         public void DeclareVariable(string name, string typeName)
         {
-            if (_table.ContainsKey(name))
-            {
-                throw new SemanticException($"Variable  :{name} exists.");
-            }
-
-            if (TypesTable.Instance.Contains(name))
-                throw new SemanticException($"  :{name} is a Type.");
+            if (_table.ContainsKey(name)) throw new SemanticException($"Variable: {name} exists.");
+            if (TypesTable.Instance.Contains(name)) throw new SemanticException($"{name} is a Type.");
 
             _table.Add(name, TypesTable.Instance.GetType(typeName));
         }
@@ -39,35 +35,25 @@ namespace PascalWebCompiler.Semantic
                 return _table[name];
             }
 
-            throw new SemanticException($"Variable :{name} doesn't exists.");
+            throw new SemanticException($"Variable: {name} doesn't exists.");
         }
 
-        public void DeclareVariable(string value, string typeName, List<int> dimensions)
+        public void DeclareVariable(string value, string typeName, List<Range> ranges)
         {
-            if (dimensions.Count == 0)
+           
+            var type = TypesTable.Instance.GetType(typeName);
+            //ranges.Reverse(0, ranges.Count);
+            foreach (var range in ranges)
             {
-                DeclareVariable(value, typeName);
+                if(range.InferiorLimit.Value > range.SuperiorLimit.Value) throw new SemanticException("Invalid range: inferior limit is bigger than superior limit.");
+                type = new ArrayType {InferiorLimit = range.InferiorLimit.Value, SuperiorLimit = range.SuperiorLimit.Value, Type = type};
             }
-            else
-            {
-                var type = TypesTable.Instance.GetType(typeName);
-                dimensions.Reverse(0, dimensions.Count);
-                foreach (var dimension in dimensions)
-                {
 
-                    //type = new ArrayType(dimension, type);
+            if (_table.ContainsKey(value) || _constants.Contains(value)) throw new SemanticException($"Variable: {value} already exists.");
+            if (TypesTable.Instance.Contains(value)) throw new SemanticException($"{value} it's a type.");
 
-                }
-                if (_table.ContainsKey(value))
-                {
-                    throw new SemanticException($"Variable: {value} already exists.");
-                }
-
-                if (TypesTable.Instance.Contains(value))
-                    throw new SemanticException($"{value} it's a type.");
-
-                _table.Add(value, type);
-            }
+            _table.Add(value, type);
+            
         }
 
         public void AddConstant(string value)
@@ -80,31 +66,5 @@ namespace PascalWebCompiler.Semantic
             return _constants.Contains(value);
         }
     }
-
-    //public class ArrayType : BaseType
-    //{
-    //    public int Dimension { get; set; }
-    //    public BaseType Type { get; set; }
-
-    //    public ArrayType(int dimension, BaseType type)
-    //    {
-    //        Dimension = dimension;
-    //        Type = type;
-    //    }
-
-    //    public override bool IsAssignable(BaseType otherType)
-    //    {
-    //        if (otherType is ArrayType)
-    //        {
-    //            var paramArray = (ArrayType)otherType;
-    //            if (Dimension == paramArray.Dimension && Type.IsAssignable(paramArray.Type))
-    //            {
-    //                return true;
-    //            }
-    //        }
-
-    //        return false;
-    //    }
-    //}
 }
 

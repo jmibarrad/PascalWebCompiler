@@ -21,5 +21,10 @@ namespace PascalWebCompiler.Syntactic.Tree.Loops
                 throw new SemanticException("Not a Boolean type");
             }
         }
+
+        public override string GenerateCode()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
