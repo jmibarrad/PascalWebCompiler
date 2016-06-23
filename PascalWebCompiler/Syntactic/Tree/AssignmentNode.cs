@@ -16,7 +16,7 @@ namespace PascalWebCompiler.Syntactic.Tree
 
             
 
-            if (!idType.IsAssignable(expressionType)) throw new SemanticException("Type Mismatch Exception");
+            if (!idType.IsAssignable(expressionType)) throw new SemanticException($"Type Mismatch Exception between {idType} and {expressionType}");
             if (SymbolTable.Instance.GetConstant(ValueIdNode.Value)) throw new SemanticException($"Constant variable: {ValueIdNode.Value} can't be assign.");
         }
 

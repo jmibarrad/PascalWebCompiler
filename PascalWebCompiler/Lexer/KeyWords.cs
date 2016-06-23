@@ -40,7 +40,8 @@ namespace PascalWebCompiler.Lexer
             { "to", TokenType.KW_TO },
             { "repeat", TokenType.KW_REPEAT },
             { "true", TokenType.KW_TRUE },
-            { "false", TokenType.KW_FALSE }
+            { "false", TokenType.KW_FALSE },
+            { "println", TokenType.PRINTLN }
 
         };
 

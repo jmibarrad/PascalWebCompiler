@@ -7,6 +7,7 @@ using PascalWebCompiler.Syntactic.Tree.Declaration;
 using PascalWebCompiler.Syntactic.Tree.DeclareConstants;
 using PascalWebCompiler.Syntactic.Tree.DeclareType;
 using PascalWebCompiler.Syntactic.Tree.Expression;
+using PascalWebCompiler.Syntactic.Tree.Functions;
 using PascalWebCompiler.Syntactic.Tree.ID;
 using PascalWebCompiler.Syntactic.Tree.Loops;
 using PascalWebCompiler.Syntactic.Tree.Operators.Arithmethic;
@@ -173,6 +174,13 @@ namespace PascalWebCompiler.Syntactic
                 var htmlContent = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
                 return new HtmlNode {Content = htmlContent};
+            }
+            else if (_currentToken.Type == TokenType.PRINTLN)
+            {
+                _currentToken = _lexer.GetNextToken();
+                var expression = PascalExpression();
+                if (_currentToken.Type != TokenType.EOS) throw new SyntaxException($"Unexpected Sentence Token: {_currentToken.Lexeme} Expected ';' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                return new PrintLineNode { Expression = expression };
             }
             else if (_currentToken.Type == TokenType.KW_CONST)
             {
@@ -736,6 +744,7 @@ namespace PascalWebCompiler.Syntactic
                 {
                     _currentToken = _lexer.GetNextToken();
                     var statements = FunctionBlock();
+                    parameters.Reverse();
                     return new ProcedureDeclarationNode {Parameters = parameters, ProcedureName = procedureName, Statements = statements};
                 }
                 else
@@ -797,8 +806,7 @@ namespace PascalWebCompiler.Syntactic
 
         private List<Param> FunctionListDeclaration(List<Param> paramList)
         {
-            var param = DeclareFunctionParams();
-            paramList.Insert(0, param);
+            DeclareFunctionParams(paramList);
             return ExtraDeclaration(paramList);
         }
 
@@ -813,7 +821,7 @@ namespace PascalWebCompiler.Syntactic
             return paramList;
         }
 
-        private Param DeclareFunctionParams()
+        private void DeclareFunctionParams(List<Param> paramList)
         {
             if (_currentToken.Type == TokenType.KW_VAR)
             {
@@ -827,7 +835,14 @@ namespace PascalWebCompiler.Syntactic
                     {
                         var type = _currentToken.Lexeme;
                         _currentToken = _lexer.GetNextToken();
-                        return new ReferenceParam {ParamList = idList, ParamType = type};
+                        var list = new List<Param>();
+                        foreach (var param in idList)
+                        {
+                            list.Add(new ReferenceParam {Name = param, ParamType = type});
+                        }
+                        paramList.InsertRange(0, list);
+                        //return new ReferenceParam {ParamList = idList, ParamType = type};
+                        return;
                     }
                     else
                     {
@@ -846,7 +861,13 @@ namespace PascalWebCompiler.Syntactic
                     {
                         var type = _currentToken.Lexeme;
                         _currentToken = _lexer.GetNextToken();
-                        return new ValueParam { ParamList = idList, ParamType = type };
+                        var list = new List<Param>();
+                        foreach (var param in idList)
+                        {
+                            list.Add(new ValueParam { Name = param, ParamType = type });
+                        }
+                        paramList.InsertRange(0, list);
+                        return;
                     }
                     else
                     {
@@ -874,7 +895,7 @@ namespace PascalWebCompiler.Syntactic
                 if (_currentToken.Type == TokenType.TK_RIGHTPARENTHESIS)
                 {
                     _currentToken = _lexer.GetNextToken();
-                    return new CallFunctionNode {IdNode = new IdNode {Value = idLexeme}, Parameters = parameters};
+                    return new CallProcedureNode {ProcedureName = idLexeme, Parameters = parameters};
                 }
                 else
                 {
@@ -976,7 +997,7 @@ namespace PascalWebCompiler.Syntactic
 
         private void RecordPropertyList(List<TypeDeclarationNode> propertyList)
         {
-            //IdList(new List<IdNode>());
+            //IdList(new List<FunctionName>());
             if (_currentToken.Type == TokenType.ID)
             {
                 var propertyName = _currentToken.Lexeme;
@@ -1332,10 +1353,11 @@ namespace PascalWebCompiler.Syntactic
                     _currentToken = _lexer.GetNextToken();
                     var expressionList = new List<ExpressionNode>();
                     expressionList = CallFunction(expressionList);
+                    expressionList.Reverse();
                     if (_currentToken.Type == TokenType.TK_RIGHTPARENTHESIS)
                     {
                         _currentToken = _lexer.GetNextToken();
-                        return new AssignFunctionNode {IdNode = new IdNode{Value = idValue}, Parameters = expressionList}; //need to implement this shit
+                        return new AssignFunctionNode {FunctionName = idValue, Parameters = expressionList}; //need to implement this shit
                     }
                     else
                     {

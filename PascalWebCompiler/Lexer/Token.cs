@@ -73,7 +73,8 @@
         KW_BREAK,
         KW_CONTINUE,
         KW_TRUE,
-        KW_FALSE
+        KW_FALSE,
+        PRINTLN
     }
 
     public class Token

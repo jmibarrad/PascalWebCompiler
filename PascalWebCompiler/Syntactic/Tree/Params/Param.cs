@@ -4,7 +4,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Params
 {
     public class Param
     {
-        public List<string> ParamList;
+        public string Name;
         public string ParamType;
     }
 }

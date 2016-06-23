@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using PascalWebCompiler.Exceptions;
 using PascalWebCompiler.Semantic.Types;
 using PascalWebCompiler.Syntactic.Tree.DeclareType;
@@ -10,6 +11,7 @@ namespace PascalWebCompiler.Semantic
         private readonly Dictionary<string, BaseType> _table;
         private readonly List<string> _constants;
         private static SymbolTable _instance;
+        private static readonly List<SymbolTable> SymbolTables = new List<SymbolTable>();
 
 
         private SymbolTable()
@@ -18,6 +20,7 @@ namespace PascalWebCompiler.Semantic
             _constants = new List<string>();
         }
 
+        //public static SymbolTable Instance => _instance != null ? SymbolTables.Last() : (SymbolTables.Insert(0, new SymbolTable()));
         public static SymbolTable Instance => _instance ?? (_instance = new SymbolTable());
 
         public void DeclareVariable(string name, string typeName)
@@ -26,6 +29,14 @@ namespace PascalWebCompiler.Semantic
             if (TypesTable.Instance.Contains(name)) throw new SemanticException($"{name} is a Type.");
 
             _table.Add(name, TypesTable.Instance.GetType(typeName));
+        }
+
+        public void DeclareVariable(string name, BaseType type)
+        {
+            if (_table.ContainsKey(name)) throw new SemanticException($"Variable: {name} exists.");
+            if (TypesTable.Instance.Contains(name)) throw new SemanticException($"{name} is a Type.");
+
+            _table.Add(name, type);
         }
 
         public BaseType GetVariable(string name)

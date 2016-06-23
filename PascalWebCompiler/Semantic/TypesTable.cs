@@ -14,13 +14,14 @@ namespace PascalWebCompiler.Semantic
             _table = new Dictionary<string, BaseType>
             {
                 {"integer", new IntegerType()},
-                {"char", new IntegerType()},
+                {"char", new CharType()},
                 {"string", new StringType()},
                 {"real", new RealType()},
                 {"boolean", new BooleanType()},
                 {"array", new ArrayType()},
                 {"enum", new EnumType()},
-                {"record", new RecordType()}
+                {"record", new RecordType()},
+//                {"function", new FunctionType()}
             };
             //_table.Add("typedef", new TypeDefType());
         }
