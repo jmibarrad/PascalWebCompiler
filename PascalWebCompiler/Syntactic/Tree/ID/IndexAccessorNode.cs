@@ -10,7 +10,7 @@ namespace PascalWebCompiler.Syntactic.Tree.ID
 
         public override BaseType Validate(BaseType type)
         {
-            if (!(type is ArrayType)) throw new SemanticException("Illegal indexation: variable is not an array.");
+            if (!(type is ArrayType)) throw new SemanticException($"Illegal indexation: {type} is not an array.");
 
             var array = (ArrayType)type;
            

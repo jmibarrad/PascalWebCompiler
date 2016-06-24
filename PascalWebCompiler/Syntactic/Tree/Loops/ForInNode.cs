@@ -1,4 +1,5 @@
 ﻿using PascalWebCompiler.Exceptions;
+using PascalWebCompiler.Semantic;
 using PascalWebCompiler.Semantic.Types;
 using PascalWebCompiler.Syntactic.Tree.Expression;
 
@@ -8,7 +9,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Loops
     {
         public IdNode IdNode;
         public IdNode IdNodeCollection;
-
+        public SymbolTable ForInSymbolTable = new SymbolTable();
         public override void ValidateNodeSemantic()
         {
             var validateSemantic = IdNode.ValidateSemantic();
@@ -16,10 +17,12 @@ namespace PascalWebCompiler.Syntactic.Tree.Loops
 
             if (IdNodeCollection.ValidateSemantic() is ArrayType)
             {
+                SymbolTable.AddSymbolTable(ForInSymbolTable);
                 foreach (var sentenceNode in Statements)
                 {
                     sentenceNode.ValidateNodeSemantic();
                 }
+                SymbolTable.RemoveSymbolTable();
             }
             else
             {

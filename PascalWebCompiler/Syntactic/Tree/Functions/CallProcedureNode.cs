@@ -24,7 +24,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Functions
                 var paramType = parameter.ValidateSemantic();
                 var funcParamType = typeFunction.FunctionParams[index];
                 var isIdNode = parameter is IdNode;
-                if (isIdNode != funcParamType.ByReference) throw new SemanticException($"Must be by reference.");
+                if (!isIdNode && funcParamType.ByReference) throw new SemanticException($"{paramType} must be by reference.");
                 if (paramType.IsAssignable(funcParamType.Type))
                 {
                     index++;

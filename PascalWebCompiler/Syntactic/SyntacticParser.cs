@@ -180,6 +180,7 @@ namespace PascalWebCompiler.Syntactic
                 _currentToken = _lexer.GetNextToken();
                 var expression = PascalExpression();
                 if (_currentToken.Type != TokenType.EOS) throw new SyntaxException($"Unexpected Sentence Token: {_currentToken.Lexeme} Expected ';' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                _currentToken = _lexer.GetNextToken();
                 return new PrintLineNode { Expression = expression };
             }
             else if (_currentToken.Type == TokenType.KW_CONST)
@@ -340,7 +341,7 @@ namespace PascalWebCompiler.Syntactic
             if (_currentToken.Type == TokenType.KW_THEN)
             {
                 _currentToken = _lexer.GetNextToken();
-                ifNode.TruStatements = Block();
+                ifNode.TrueStatements = Block();
                 if (_currentToken.Type == TokenType.KW_ELSE)
                 {
                     ifNode.FalseStaments = Else();
@@ -997,6 +998,7 @@ namespace PascalWebCompiler.Syntactic
 
         private void RecordPropertyList(List<TypeDeclarationNode> propertyList)
         {
+
             //IdList(new List<FunctionName>());
             if (_currentToken.Type == TokenType.ID)
             {
@@ -1023,11 +1025,6 @@ namespace PascalWebCompiler.Syntactic
                         $"Unexpected RecordPropertyList Token: {_currentToken.Lexeme} Expected: ':' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
                 }
             }
-            //else
-            //{
-            //    throw new SyntaxException(
-            //            $"RecordPropertyName Unexpected RecordPropertyList Token: {_currentToken.Lexeme} Expected: ':' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
-            //}
         }
 
         private TypeDeclarationNode RecordType()
@@ -1107,7 +1104,7 @@ namespace PascalWebCompiler.Syntactic
                     _currentToken = _lexer.GetNextToken();
                     RangeList(rangeList, inferiorLimit);
                 }
-                //else if(_currentToken.Type == TokenType.ID)
+                //else if(_currentToken.ReturnType == TokenType.ID)
                 //{
                 //    _currentToken = _lexer.GetNextToken();
                 //}
@@ -1147,12 +1144,12 @@ namespace PascalWebCompiler.Syntactic
                 _currentToken = _lexer.GetNextToken();
                 return idType;
             }
-            /*else if (_currentToken.Type == TokenType.KW_ARRAY)
+            /*else if (_currentToken.ReturnType == TokenType.KW_ARRAY)
             {
                 _currentToken = _lexer.GetNextToken();
                 Array();
             }
-            else if(_currentToken.Type == TokenType.NUMBER_LITERAL)
+            else if(_currentToken.ReturnType == TokenType.NUMBER_LITERAL)
             {
                 var inferiorLimit = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();

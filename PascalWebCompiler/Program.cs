@@ -13,7 +13,7 @@ namespace PascalWebCompiler
         {
          
             string text;
-            var fileStream = new FileStream(@"C:\Users\IBARRA\Documents\Pascal\Example3.pas", FileMode.Open, FileAccess.Read);
+            var fileStream = new FileStream(@"C:\Users\IBARRA\Documents\Pascal\pascalTest.pas", FileMode.Open, FileAccess.Read);
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
             {
                 text = streamReader.ReadToEnd();
@@ -87,9 +87,16 @@ namespace PascalWebCompiler
             try
             {
                 var tree = parser.Parse();
+                var servletCode = "";
                 foreach (var sentenceNode in tree)
                 {
                     sentenceNode.ValidateNodeSemantic();
+                    //servletCode += sentenceNode.GenerateCode();
+                }
+
+                using (StreamWriter writer = new StreamWriter("C:\\Users\\IBARRA\\Documents\\Pascal\\servlet.java", true))
+                {
+                    //writer.WriteLine(servletCode);
                 }
                 Console.WriteLine("No errors found.");
             }

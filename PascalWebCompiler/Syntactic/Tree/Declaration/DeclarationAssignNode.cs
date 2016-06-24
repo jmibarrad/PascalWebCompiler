@@ -13,7 +13,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Declaration
             var idType = TypesTable.Instance.GetType(Type);
 
             if (idType != Value.ValidateSemantic())
-                throw new SemanticException("Type Mismatch");
+                throw new SemanticException("ReturnType Mismatch");
             
             SymbolTable.Instance.DeclareVariable(IdNode.Value, Type);
         }

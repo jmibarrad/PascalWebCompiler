@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using PascalWebCompiler.Exceptions;
+using PascalWebCompiler.Semantic;
 using PascalWebCompiler.Semantic.Types;
 using PascalWebCompiler.Syntactic.Tree.Expression;
 
@@ -9,20 +10,27 @@ namespace PascalWebCompiler.Syntactic.Tree
     {
         public ExpressionNode Condition;
         public List<SentenceNode> FalseStaments = new List<SentenceNode>();
-        public List<SentenceNode> TruStatements;
+        public List<SentenceNode> TrueStatements;
+        public SymbolTable IfSymbolTable = new SymbolTable();
+        public SymbolTable ElseSymbolTable = new SymbolTable();
+
         public override void ValidateNodeSemantic()
         {
             if (Condition.ValidateSemantic() is BooleanType)
             {
+                SymbolTable.AddSymbolTable(IfSymbolTable);
+                foreach (var sentenceNode in TrueStatements)
+                {
+                    sentenceNode.ValidateNodeSemantic();
+                }
+                SymbolTable.RemoveSymbolTable();
+
+                SymbolTable.AddSymbolTable(ElseSymbolTable);
                 foreach (var sentenceNode in FalseStaments)
                 {
                     sentenceNode.ValidateNodeSemantic();
                 }
-
-                foreach (var sentenceNode in TruStatements)
-                {
-                    sentenceNode.ValidateNodeSemantic();
-                }
+                SymbolTable.RemoveSymbolTable();
             }
             else
             {

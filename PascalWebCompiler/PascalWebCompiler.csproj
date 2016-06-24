@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeGeneration\GenerateServlet.cs" />
     <Compile Include="Exceptions\LexicalException.cs" />
     <Compile Include="Exceptions\SemanticException.cs" />
     <Compile Include="Exceptions\SyntaxException.cs" />

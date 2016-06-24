@@ -14,15 +14,13 @@ namespace PascalWebCompiler.Syntactic.Tree
             var idType = ValueIdNode.ValidateSemantic();
             var expressionType = Value.ValidateSemantic();
 
-            
-
             if (!idType.IsAssignable(expressionType)) throw new SemanticException($"Type Mismatch Exception between {idType} and {expressionType}");
             if (SymbolTable.Instance.GetConstant(ValueIdNode.Value)) throw new SemanticException($"Constant variable: {ValueIdNode.Value} can't be assign.");
         }
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            return $"{ValueIdNode.GenerateCode()} = {Value.GenerateCode()}";
         }
     }
 }

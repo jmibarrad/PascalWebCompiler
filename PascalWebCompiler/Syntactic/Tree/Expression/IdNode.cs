@@ -13,6 +13,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Expression
         public override BaseType ValidateSemantic()
         {
             var type = SymbolTable.Instance.GetVariable(Value);
+            Accesors.Reverse();
             foreach (var accesorNode in Accesors)
             {
                 type = accesorNode.Validate(type);

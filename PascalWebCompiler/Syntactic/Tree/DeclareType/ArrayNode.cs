@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PascalWebCompiler.Exceptions;
 using PascalWebCompiler.Semantic;
 using PascalWebCompiler.Semantic.Types;
 
@@ -11,7 +12,14 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
 
         public override void ValidateNodeSemantic()
         {
-            SymbolTable.Instance.DeclareVariable(TypeName, ArrayType, Ranges);
+            var type = TypesTable.Instance.GetType(ArrayType);
+            foreach (var range in Ranges)
+            {
+                if (range.InferiorLimit.Value > range.SuperiorLimit.Value) throw new SemanticException("Invalid range: inferior limit is bigger than superior limit.");
+                type = new ArrayType { InferiorLimit = range.InferiorLimit.Value, SuperiorLimit = range.SuperiorLimit.Value, Type = type };
+            }
+
+            TypesTable.Instance.RegisterType(TypeName, type);
         }
 
         public override string GenerateCode()

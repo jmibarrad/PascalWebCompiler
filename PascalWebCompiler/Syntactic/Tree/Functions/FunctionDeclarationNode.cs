@@ -11,23 +11,26 @@ namespace PascalWebCompiler.Syntactic.Tree.Functions
         public List<SentenceNode> Statements;
         public List<Param> Parameters;
         public string Type;
-        public SymbolTable FunctionLocalTable;
+        public SymbolTable FunctionLocalTable = new SymbolTable();
 
         public override void ValidateNodeSemantic()
         {
             var funcType = TypesTable.Instance.GetType(Type);
             List<FunctionParamType> parameters = new List<FunctionParamType>();
+            SymbolTable.Instance.DeclareVariable(FunctionName, new FunctionType { ReturnType = funcType, FunctionParams = parameters });
+            SymbolTable.AddSymbolTable(FunctionLocalTable);
             foreach (var parameter in Parameters)
             {
+                SymbolTable.Instance.DeclareVariable(parameter.Name, parameter.ParamType);
                 var paramType = TypesTable.Instance.GetType(parameter.ParamType);
                 parameters.Insert(0, new FunctionParamType {ByReference = parameter is ReferenceParam, Type = paramType});
             }
-            SymbolTable.Instance.DeclareVariable(FunctionName, new FunctionType {Type = funcType , FunctionParams = parameters});
 
             foreach (var statement in Statements)
             {
                 statement.ValidateNodeSemantic();
             }
+            SymbolTable.RemoveSymbolTable();
         }
 
         public override string GenerateCode()

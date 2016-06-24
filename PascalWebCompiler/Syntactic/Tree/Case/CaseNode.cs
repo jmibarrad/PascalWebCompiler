@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using PascalWebCompiler.Exceptions;
+using PascalWebCompiler.Semantic;
 using PascalWebCompiler.Semantic.Types;
 using PascalWebCompiler.Syntactic.Tree.Expression;
 
@@ -9,6 +10,8 @@ namespace PascalWebCompiler.Syntactic.Tree.Case
     {
         public IdNode IdNode { get; set; }
         public List<CaseStatement> CaseStatements;
+        public SymbolTable CaseSymbolTable = new SymbolTable();
+
         public override void ValidateNodeSemantic()
         {
             var idNodeType = IdNode.ValidateSemantic();

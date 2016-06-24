@@ -8,11 +8,11 @@ namespace PascalWebCompiler.Semantic.Types
 {
     public class FunctionType : BaseType
     {
-        public BaseType Type;
+        public BaseType ReturnType;
         public List<FunctionParamType> FunctionParams = new List<FunctionParamType>();
         public override bool IsAssignable(BaseType otherType)
         {
-            return false;
+            return otherType == ReturnType;
         }
 
         public override string ToString()

@@ -37,7 +37,7 @@ namespace PascalWebCompiler.Tests.Steps
         {
             for (int i = 0; i < table.RowCount; i++)
             {
-                Assert.AreEqual(table.Rows[i]["Type"], _tokenList[i].Type.ToString(), "The TokenTypes do not match.");
+                Assert.AreEqual(table.Rows[i]["ReturnType"], _tokenList[i].Type.ToString(), "The TokenTypes do not match.");
                 Assert.AreEqual(table.Rows[i]["Lexeme"], _tokenList[i].Lexeme, "The TokenTypes do not match.");
                 Assert.AreEqual(table.Rows[i]["Row"], _tokenList[i].Row.ToString(), "The TokenTypes do not match.");
                 Assert.AreEqual(table.Rows[i]["Column"], _tokenList[i].Column.ToString(), "The TokenTypes do not match.");

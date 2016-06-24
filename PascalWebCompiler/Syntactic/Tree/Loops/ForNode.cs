@@ -1,4 +1,5 @@
 ﻿using PascalWebCompiler.Exceptions;
+using PascalWebCompiler.Semantic;
 using PascalWebCompiler.Semantic.Types;
 using PascalWebCompiler.Syntactic.Tree.Expression;
 
@@ -9,6 +10,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Loops
         public ExpressionNode Condition;
         public IdNode IdNode;
         public ExpressionNode CounterValue;
+        public SymbolTable ForSymbolTable = new SymbolTable();
 
         public override void ValidateNodeSemantic()
         {
@@ -16,14 +18,16 @@ namespace PascalWebCompiler.Syntactic.Tree.Loops
             if (!(validateSemantic is IntegerType)) throw new SemanticException("Not an Integer type.");
 
             var counterValueType = validateSemantic.IsAssignable(CounterValue.ValidateSemantic());
-            if (!counterValueType) throw new SemanticException("Value can't be assign.");
+            if (!counterValueType) throw new SemanticException($"{CounterValue} can't be assign.");
 
             if (Condition.ValidateSemantic() is IntegerType)
             {
+                SymbolTable.AddSymbolTable(ForSymbolTable);
                 foreach (var sentenceNode in Statements)
                 {
                     sentenceNode.ValidateNodeSemantic();
                 }
+                SymbolTable.RemoveSymbolTable();
             }
             else
             {
