@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using PascalWebCompiler.CodeGeneration;
 using PascalWebCompiler.Lexer;
 using PascalWebCompiler.Syntactic;
 
@@ -13,7 +14,8 @@ namespace PascalWebCompiler
         {
          
             string text;
-            var fileStream = new FileStream(@"C:\Users\IBARRA\Documents\Pascal\pascalTest.pas", FileMode.Open, FileAccess.Read);
+            //var fileStream = new FileStream(@"C:\Users\IBARRA\Documents\Pascal\pascalTest.pas", FileMode.Open, FileAccess.Read);
+            var fileStream = new FileStream(@"C:\Users\IBARRA\Documents\Pascal\Example2.pas", FileMode.Open, FileAccess.Read);
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
             {
                 text = streamReader.ReadToEnd();
@@ -91,12 +93,12 @@ namespace PascalWebCompiler
                 foreach (var sentenceNode in tree)
                 {
                     sentenceNode.ValidateNodeSemantic();
-                    //servletCode += sentenceNode.GenerateCode();
+                    servletCode += sentenceNode.GenerateCode();
                 }
 
-                using (StreamWriter writer = new StreamWriter("C:\\Users\\IBARRA\\Documents\\Pascal\\servlet.java", true))
+                using (StreamWriter writer = new StreamWriter("C:\\Users\\IBARRA\\Documents\\Pascal\\servlet.java", false))
                 {
-                    //writer.WriteLine(servletCode);
+                    writer.WriteLine(GenerateServlet.InitServletCode(servletCode));
                 }
                 Console.WriteLine("No errors found.");
             }

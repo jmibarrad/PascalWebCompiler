@@ -4,5 +4,7 @@
     {
         public abstract bool IsAssignable(BaseType otherType);
         public abstract override string ToString();
+
+        public abstract string ToJavaString();
     }
 }

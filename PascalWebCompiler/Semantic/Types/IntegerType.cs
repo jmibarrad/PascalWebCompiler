@@ -11,5 +11,10 @@
         {
             return "Integer";
         }
+
+        public override string ToJavaString()
+        {
+            return "int ";
+        }
     }
 }

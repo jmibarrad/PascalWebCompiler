@@ -24,7 +24,12 @@ namespace PascalWebCompiler.Syntactic.Tree.Expression
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            var javaAccesorCode = string.Empty;
+            foreach (var accessorNode in Accesors)
+            {
+                javaAccesorCode += accessorNode.GenerateCode();
+            }
+            return Value + javaAccesorCode;
         }
     }
 }

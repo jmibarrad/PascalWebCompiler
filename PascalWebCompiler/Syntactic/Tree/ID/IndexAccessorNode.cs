@@ -16,5 +16,10 @@ namespace PascalWebCompiler.Syntactic.Tree.ID
            
             return array.Type;
         }
+
+        public override string GenerateCode()
+        {
+            return $"[{IndexExpression.GenerateCode()}]";
+        }
     }
 }

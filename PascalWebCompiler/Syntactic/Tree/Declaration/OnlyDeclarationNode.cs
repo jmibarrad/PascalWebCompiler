@@ -18,7 +18,14 @@ namespace PascalWebCompiler.Syntactic.Tree.Declaration
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            var javaDeclareCode = string.Empty;
+            var javaType = TypesTable.Instance.GetType(Type);
+            foreach (var idNode in IdNodesList)
+            {
+                javaDeclareCode += $"{idNode.GenerateCode()},";
+            }
+            javaDeclareCode = javaDeclareCode.Remove(javaDeclareCode.Length - 1, 1);
+            return javaType.ToJavaString() + javaDeclareCode + ";";
         }
     }
 }

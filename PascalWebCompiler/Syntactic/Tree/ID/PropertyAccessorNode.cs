@@ -18,5 +18,10 @@ namespace PascalWebCompiler.Syntactic.Tree.ID
 
             return recordType.Properties[IdNode.Value];
         }
+
+        public override string GenerateCode()
+        {
+            return $".{IdNode.GenerateCode()}";
+        }
     }
 }

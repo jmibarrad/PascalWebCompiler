@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PascalWebCompiler.CodeGeneration
+﻿namespace PascalWebCompiler.CodeGeneration
 {
     public static class GenerateServlet
     {
@@ -28,14 +22,14 @@ public class HelloWorld extends HttpServlet {
     {
         response.setContentType(""""text/html"""");
         PrintWriter out = response.getWriter();
-        ""+ code +@""
+        "+ code + @"
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         response.setContentType(""text/html"");
         PrintWriter out = response.getWriter();
-        " + code +@"
+        " + code + @"
     }
 
     public void destroy()

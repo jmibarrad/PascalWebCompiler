@@ -1144,19 +1144,6 @@ namespace PascalWebCompiler.Syntactic
                 _currentToken = _lexer.GetNextToken();
                 return idType;
             }
-            /*else if (_currentToken.ReturnType == TokenType.KW_ARRAY)
-            {
-                _currentToken = _lexer.GetNextToken();
-                Array();
-            }
-            else if(_currentToken.ReturnType == TokenType.NUMBER_LITERAL)
-            {
-                var inferiorLimit = _currentToken.Lexeme;
-                _currentToken = _lexer.GetNextToken();
-                var arrayRangeList = new List<Range>();
-                Range(arrayRangeList, inferiorLimit);
-                return 
-            }*/
             throw new SyntaxException($"ArrayType Unexpected Token: {_currentToken.Lexeme} Expected: 'id' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
         }
 

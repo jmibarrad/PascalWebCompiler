@@ -19,6 +19,11 @@ namespace PascalWebCompiler.Semantic.Types
             return "Record";
         }
 
+        public override string ToJavaString()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Dictionary<string, BaseType> Properties { get; set; }
     }
 }

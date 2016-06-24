@@ -11,5 +11,10 @@
         {
             return "char";
         }
+
+        public override string ToJavaString()
+        {
+            return "char ";
+        }
     }
 }

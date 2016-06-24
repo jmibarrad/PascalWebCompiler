@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace PascalWebCompiler.Syntactic.Tree.Params
 {
     public class Param

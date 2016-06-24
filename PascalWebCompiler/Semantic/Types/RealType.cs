@@ -12,5 +12,10 @@
         {
             return "Real";
         }
+
+        public override string ToJavaString()
+        {
+            return "double ";
+        }
     }
 }
