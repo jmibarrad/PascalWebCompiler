@@ -2,6 +2,7 @@
 {
     public static class GenerateServlet
     {
+        public static string OuterCode = string.Empty;
         public static string InitServletCode(string code)
         {
             var sourceCode =
@@ -9,9 +10,9 @@
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-public class HelloWorld extends HttpServlet {
+public class Pascal extends HttpServlet {
  
-    private String message;
+    "+ OuterCode + @"
 
     public void init() throws ServletException
     {

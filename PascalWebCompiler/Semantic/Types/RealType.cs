@@ -4,7 +4,7 @@
     {
         public override bool IsAssignable(BaseType otherType)
         {
-            return otherType is RealType;
+            return otherType is RealType || otherType is IntegerType;
 
         }
 
@@ -15,7 +15,7 @@
 
         public override string ToJavaString()
         {
-            return "double ";
+            return "double";
         }
     }
 }

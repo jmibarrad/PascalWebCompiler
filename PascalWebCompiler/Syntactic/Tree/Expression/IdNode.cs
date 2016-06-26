@@ -13,6 +13,9 @@ namespace PascalWebCompiler.Syntactic.Tree.Expression
         public override BaseType ValidateSemantic()
         {
             var type = SymbolTable.Instance.GetVariable(Value);
+            if (type is ArrayType)
+                type = TypesTable.Instance.GetType(Value);
+
             Accesors.Reverse();
             foreach (var accesorNode in Accesors)
             {
@@ -29,7 +32,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Expression
             {
                 javaAccesorCode += accessorNode.GenerateCode();
             }
-            return Value + javaAccesorCode;
+            return $"_{Value} {javaAccesorCode}";
         }
     }
 }

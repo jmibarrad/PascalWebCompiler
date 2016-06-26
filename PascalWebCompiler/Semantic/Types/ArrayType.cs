@@ -28,7 +28,8 @@
 
         public override string ToJavaString()
         {
-            throw new System.NotImplementedException();
+           
+            return $"";
         }
     }
 }

@@ -13,7 +13,10 @@ namespace PascalWebCompiler.Syntactic.Tree.Expression
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            var stringJava = Value.Remove(0, 1);
+            stringJava = stringJava.Remove(stringJava.Length - 1, 1);
+            return $" \"{stringJava}\"";
+
         }
     }
 }

@@ -16,7 +16,7 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            return $"";
         }
 
         public override BaseType GetBaseType()

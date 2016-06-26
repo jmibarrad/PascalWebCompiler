@@ -12,7 +12,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Expression
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            return Value ? "true":"false";
         }
 
         public bool Value { get; set; }

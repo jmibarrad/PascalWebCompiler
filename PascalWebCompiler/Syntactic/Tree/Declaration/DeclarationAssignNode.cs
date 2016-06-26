@@ -11,16 +11,17 @@ namespace PascalWebCompiler.Syntactic.Tree.Declaration
         public override void ValidateNodeSemantic()
         {
             var idType = TypesTable.Instance.GetType(Type);
-
-            if (idType != Value.ValidateSemantic())
-                throw new SemanticException("ReturnType Mismatch");
+            var valueType = Value.ValidateSemantic();
+            if (idType != valueType) throw new SemanticException($"{idType} and {valueType} ReturnType Mismatch");
             
             SymbolTable.Instance.DeclareVariable(IdNode.Value, Type);
         }
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            var javaType = TypesTable.Instance.GetType(Type);
+            
+            return $"{javaType.ToJavaString()} {IdNode.GenerateCode()} = {Value.GenerateCode()};";
         }
     }
 }

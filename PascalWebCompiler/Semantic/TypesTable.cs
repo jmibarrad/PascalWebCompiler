@@ -19,8 +19,8 @@ namespace PascalWebCompiler.Semantic
                 {"real", new RealType()},
                 {"boolean", new BooleanType()},
                 {"array", new ArrayType()},
-                {"enum", new EnumType()},
-                {"record", new RecordType()},
+                //{"enum", new EnumType()},
+                //{"record", new RecordType()},
 //                {"function", new FunctionType()}
             };
             //_table.Add("typedef", new TypeDefType());

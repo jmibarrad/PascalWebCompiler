@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PascalWebCompiler.CodeGeneration;
 using PascalWebCompiler.Semantic;
 using PascalWebCompiler.Semantic.Types;
 
@@ -20,7 +21,15 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            EnumList.Reverse();
+            var enumCode = $"public enum _{TypeName} {{ \n";
+            foreach (var enumNode in EnumList)
+            {
+                enumCode += "_" + enumNode + ",";
+            }
+            enumCode = enumCode.Remove(enumCode.Length - 1, 1) +"\n}\n";
+            GenerateServlet.OuterCode += enumCode;
+            return string.Empty;
         }
 
         public override BaseType GetBaseType()

@@ -17,7 +17,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Operators.Arithmethic
 
         public override string GenerateCode()
         {
-            throw new NotImplementedException();
+            return $"{LeftOperand.GenerateCode()} / {RightOperand.GenerateCode()}";
         }
     }
 }

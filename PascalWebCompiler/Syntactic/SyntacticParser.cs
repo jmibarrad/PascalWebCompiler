@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using PascalWebCompiler.Exceptions;
 using PascalWebCompiler.Lexer;
 using PascalWebCompiler.Syntactic.Tree;
@@ -1316,7 +1317,7 @@ namespace PascalWebCompiler.Syntactic
             {
                 var value = _currentToken.Lexeme;
                 _currentToken = _lexer.GetNextToken();
-                return new RealNode { Value = float.Parse(value) };
+                return new RealNode { Value = double.Parse(value, CultureInfo.InvariantCulture) };
             }
             else if (_currentToken.Type == TokenType.KW_TRUE)
             {

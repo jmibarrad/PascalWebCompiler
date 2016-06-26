@@ -10,5 +10,6 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
         public abstract override string GenerateCode();
 
         public abstract BaseType GetBaseType();
+
     }
 }

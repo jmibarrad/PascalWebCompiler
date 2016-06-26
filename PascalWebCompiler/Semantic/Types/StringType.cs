@@ -14,7 +14,7 @@
 
         public override string ToJavaString()
         {
-            return "String ";
+            return "String";
         }
     }
 }

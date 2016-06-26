@@ -16,7 +16,13 @@ namespace PascalWebCompiler.Syntactic.Tree.Operators.Relational
         }
         public override string GenerateCode()
         {
-            throw new NotImplementedException();
+            var leftType = LeftOperand.ValidateSemantic();
+            var rightType = RightOperand.ValidateSemantic();
+            if (leftType is StringType && rightType is StringType)
+                return $"!({LeftOperand.GenerateCode()}.equals({RightOperand.GenerateCode()}))";
+
+            return $"{LeftOperand.GenerateCode()} != {RightOperand.GenerateCode()}";
+
         }
 
         public override string SemanticError(BaseType leftType, BaseType rightType)

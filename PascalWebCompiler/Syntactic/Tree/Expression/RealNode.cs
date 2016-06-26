@@ -5,7 +5,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Expression
 {
     public class RealNode : ExpressionNode
     {
-        public float Value;
+        public double Value;
         public override BaseType ValidateSemantic()
         {
             return TypesTable.Instance.GetType("real");
@@ -13,7 +13,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Expression
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            return $"{Value}";
         }
     }
 }

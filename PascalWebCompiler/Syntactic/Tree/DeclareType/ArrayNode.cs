@@ -18,13 +18,22 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
                 if (range.InferiorLimit.Value > range.SuperiorLimit.Value) throw new SemanticException("Invalid range: inferior limit is bigger than superior limit.");
                 type = new ArrayType { InferiorLimit = range.InferiorLimit.Value, SuperiorLimit = range.SuperiorLimit.Value, Type = type };
             }
-
+            SymbolTable.Instance.DeclareVariable(TypeName, "array");
             TypesTable.Instance.RegisterType(TypeName, type);
         }
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            var arrType = TypesTable.Instance.GetType(ArrayType).ToJavaString();
+            var arrayCode = $"{arrType} _{TypeName}";
+            var arrayInitializeCode = string.Empty;
+            Ranges.Reverse();
+            foreach (var range in Ranges)
+            {
+                arrayCode += "[]";
+                arrayInitializeCode += $"[{range.SuperiorLimit.Value-range.InferiorLimit.Value+1}]";
+            }
+            return $"{arrayCode} = new {arrType} {arrayInitializeCode};\n";
         }
 
         public override BaseType GetBaseType()

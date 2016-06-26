@@ -37,7 +37,13 @@ namespace PascalWebCompiler.Syntactic.Tree.Loops
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            var counter = IdNode.GenerateCode();
+            var forCode = $"for ({counter} = {CounterValue.GenerateCode()}; {counter} < {Condition.GenerateCode()}; {counter}++){{\n";
+            foreach (var sentenceNode in Statements)
+            {
+                forCode += sentenceNode.GenerateCode();
+            }
+            return forCode + "\n}\n";
         }
     }
 }

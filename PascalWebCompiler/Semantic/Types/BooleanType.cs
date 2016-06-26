@@ -14,7 +14,7 @@ namespace PascalWebCompiler.Semantic.Types
 
         public override string ToJavaString()
         {
-            return "boolean ";
+            return "boolean";
         }
     }
 }

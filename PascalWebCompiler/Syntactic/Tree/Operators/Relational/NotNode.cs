@@ -19,7 +19,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Operators.Relational
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            return $"!({ExpressionNode.GenerateCode()})";
         }
     }
 }

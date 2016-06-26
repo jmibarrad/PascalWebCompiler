@@ -12,7 +12,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Operators.Relational
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            return $"{LeftOperand.GenerateCode()} && {RightOperand.GenerateCode()}";
         }
 
         public override string SemanticError(BaseType leftType, BaseType rightType)

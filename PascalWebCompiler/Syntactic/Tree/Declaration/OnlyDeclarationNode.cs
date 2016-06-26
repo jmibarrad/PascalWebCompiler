@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using PascalWebCompiler.Semantic;
+using PascalWebCompiler.Semantic.Types;
 using PascalWebCompiler.Syntactic.Tree.Expression;
 
 namespace PascalWebCompiler.Syntactic.Tree.Declaration
@@ -12,7 +13,15 @@ namespace PascalWebCompiler.Syntactic.Tree.Declaration
         {
             foreach (var idNode in IdNodesList)
             {
-                SymbolTable.Instance.DeclareVariable(idNode.Value, Type);
+                if (TypesTable.Instance.GetType(Type) is ArrayType)
+                {
+                    SymbolTable.Instance.DeclareVariable(idNode.Value, "array");
+                    TypesTable.Instance.RegisterType(idNode.Value, TypesTable.Instance.GetType(Type));
+                }
+                else
+                {
+                    SymbolTable.Instance.DeclareVariable(idNode.Value, Type);
+                }
             }
         }
 
@@ -25,7 +34,10 @@ namespace PascalWebCompiler.Syntactic.Tree.Declaration
                 javaDeclareCode += $"{idNode.GenerateCode()},";
             }
             javaDeclareCode = javaDeclareCode.Remove(javaDeclareCode.Length - 1, 1);
-            return javaType.ToJavaString() + javaDeclareCode + ";";
+            if(javaType is RecordType)
+                return $"{javaType.ToJavaString()} {javaDeclareCode} = new {javaType.ToJavaString()}();";
+
+            return $"{javaType.ToJavaString()} {javaDeclareCode};";
         }
     }
 }

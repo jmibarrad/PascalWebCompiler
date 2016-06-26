@@ -40,7 +40,19 @@ namespace PascalWebCompiler.Syntactic.Tree
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            var javaCode = $"if ( {Condition.GenerateCode()} ) {{ \n";
+            foreach (var trueStatement in TrueStatements)
+            {
+                javaCode += trueStatement.GenerateCode();
+            }
+
+            javaCode += "} else {\n";
+            foreach (var falseStament in FalseStaments)
+            {
+                javaCode += falseStament.GenerateCode();
+            }
+
+            return javaCode + '}';
         }
     }
 }

@@ -4,6 +4,7 @@ namespace PascalWebCompiler.Semantic.Types
 {
     public class RecordType : BaseType
     {
+        public string RecordName;
         public RecordType()
         {
             Properties = new Dictionary<string, BaseType>();
@@ -21,7 +22,7 @@ namespace PascalWebCompiler.Semantic.Types
 
         public override string ToJavaString()
         {
-            throw new System.NotImplementedException();
+            return $"_{RecordName}";
         }
 
         public Dictionary<string, BaseType> Properties { get; set; }
