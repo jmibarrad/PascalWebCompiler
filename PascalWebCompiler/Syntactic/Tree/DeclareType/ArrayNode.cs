@@ -16,7 +16,7 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
             foreach (var range in Ranges)
             {
                 if (range.InferiorLimit.Value > range.SuperiorLimit.Value) throw new SemanticException("Invalid range: inferior limit is bigger than superior limit.");
-                type = new ArrayType { InferiorLimit = range.InferiorLimit.Value, SuperiorLimit = range.SuperiorLimit.Value, Type = type };
+                type = new ArrayType { JavaType = TypeName, InferiorLimit = range.InferiorLimit.Value, SuperiorLimit = range.SuperiorLimit.Value, Type = type };
             }
             SymbolTable.Instance.DeclareVariable(TypeName, "array");
             TypesTable.Instance.RegisterType(TypeName, type);
@@ -33,7 +33,7 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
                 arrayCode += "[]";
                 arrayInitializeCode += $"[{range.SuperiorLimit.Value-range.InferiorLimit.Value+1}]";
             }
-            return $"{arrayCode} = new {arrType} {arrayInitializeCode};\n";
+            return $"{arrayCode} = new {arrType}{arrayInitializeCode};\n";
         }
 
         public override BaseType GetBaseType()

@@ -13,7 +13,7 @@ namespace PascalWebCompiler.Syntactic.Tree
 
         public override string GenerateCode()
         {
-            return $"out.println({Expression.GenerateCode()})";
+            return $"out.println({Expression.GenerateCode()});";
         }
 
     }

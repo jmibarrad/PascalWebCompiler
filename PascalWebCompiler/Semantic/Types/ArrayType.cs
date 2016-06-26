@@ -2,6 +2,7 @@
 {
     public class ArrayType : BaseType
     {
+        public string JavaType;
         public int InferiorLimit { get; set; }
         public int SuperiorLimit { get; set; }
 
@@ -28,8 +29,7 @@
 
         public override string ToJavaString()
         {
-           
-            return $"";
+            return $"_{JavaType}";
         }
     }
 }

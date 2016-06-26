@@ -10,7 +10,7 @@
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            return $"out.println(\"{Content}\");";
         }
     }
 }
