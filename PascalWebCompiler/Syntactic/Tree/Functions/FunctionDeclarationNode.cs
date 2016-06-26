@@ -37,6 +37,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Functions
         {
             var functionType = TypesTable.Instance.GetType(Type).ToJavaString();
             var declareFunctionCode = $"public {functionType} _{FunctionName} (";
+            Parameters.Reverse();
             foreach (var parameter in Parameters)
             {
                 var paramType = TypesTable.Instance.GetType(parameter.ParamType).ToJavaString();

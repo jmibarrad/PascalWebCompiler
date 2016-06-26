@@ -20,7 +20,7 @@ namespace PascalWebCompiler.Syntactic.Tree
 
         public override string GenerateCode()
         {
-            return $"{ValueIdNode.GenerateCode()} = {Value.GenerateCode()}";
+            return $"{ValueIdNode.GenerateCode()} = {Value.GenerateCode()};";
         }
     }
 }

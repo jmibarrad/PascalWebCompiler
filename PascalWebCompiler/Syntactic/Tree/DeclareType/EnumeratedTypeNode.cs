@@ -11,7 +11,7 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
         public override void ValidateNodeSemantic()
         {
 
-            TypesTable.Instance.RegisterType(TypeName, new EnumType());
+            TypesTable.Instance.RegisterType(TypeName, new EnumType {Name = TypeName});
             foreach (var enumNode in EnumList)
             {
                 SymbolTable.Instance.DeclareVariable(enumNode, TypeName);
@@ -29,7 +29,7 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
             }
             enumCode = enumCode.Remove(enumCode.Length - 1, 1) +"\n}\n";
             GenerateServlet.OuterCode += enumCode;
-            return string.Empty;
+            return $"";
         }
 
         public override BaseType GetBaseType()

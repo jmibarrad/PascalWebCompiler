@@ -41,7 +41,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Functions
                 callFunctionCode += param.GenerateCode() + ",";
             }
             callFunctionCode = callFunctionCode.Remove(callFunctionCode.Length - 1, 1);
-            return callFunctionCode + ");";
+            return callFunctionCode + ")";
         }
     }
 }

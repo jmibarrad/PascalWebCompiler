@@ -32,7 +32,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Expression
             {
                 javaAccesorCode += accessorNode.GenerateCode();
             }
-            return $"_{Value} {javaAccesorCode}";
+            return $"_{Value}{javaAccesorCode}";
         }
     }
 }

@@ -837,12 +837,12 @@ namespace PascalWebCompiler.Syntactic
                     {
                         var type = _currentToken.Lexeme;
                         _currentToken = _lexer.GetNextToken();
-                        var list = new List<Param>();
+                        //var list = new List<Param>();
                         foreach (var param in idList)
                         {
-                            list.Add(new ReferenceParam {Name = param, ParamType = type});
+                            paramList.Add(new ReferenceParam {Name = param, ParamType = type});
                         }
-                        paramList.InsertRange(0, list);
+                        //paramList.InsertRange(0, list);
                         //return new ReferenceParam {ParamList = idList, ParamType = type};
                         return;
                     }
@@ -863,12 +863,12 @@ namespace PascalWebCompiler.Syntactic
                     {
                         var type = _currentToken.Lexeme;
                         _currentToken = _lexer.GetNextToken();
-                        var list = new List<Param>();
+                        //var list = new List<Param>();
                         foreach (var param in idList)
                         {
-                            list.Add(new ValueParam { Name = param, ParamType = type });
+                            paramList.Add(new ValueParam { Name = param, ParamType = type });
                         }
-                        paramList.InsertRange(0, list);
+                        //paramList.InsertRange(0, list);
                         return;
                     }
                     else
@@ -1189,7 +1189,7 @@ namespace PascalWebCompiler.Syntactic
         {
             if (_currentToken.Type == TokenType.ID)
             {
-                idList.Insert(0, new IdNode {Value = _currentToken.Lexeme});
+                idList.Add(new IdNode {Value = _currentToken.Lexeme});
                 _currentToken = _lexer.GetNextToken();
                 return OptionalId(idList);
             }

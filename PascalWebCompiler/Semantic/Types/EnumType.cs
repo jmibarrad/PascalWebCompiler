@@ -2,6 +2,7 @@
 {
     public class EnumType : BaseType
     {
+        public string Name { get; set; }
         public override bool IsAssignable(BaseType otherType)
         {
             return otherType is EnumType;
@@ -14,7 +15,7 @@
 
         public override string ToJavaString()
         {
-            throw new System.NotImplementedException();
+            return $"_{Name}";
         }
     }
 }
