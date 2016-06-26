@@ -16,7 +16,9 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
 
         public override string GenerateCode()
         {
-            return $"";
+            var type = TypesTable.Instance.GetType(TypeId);
+
+            return $"{type.ToJavaString()} _{TypeName};";
         }
 
         public override BaseType GetBaseType()

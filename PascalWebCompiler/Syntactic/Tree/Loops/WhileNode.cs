@@ -9,23 +9,22 @@ namespace PascalWebCompiler.Syntactic.Tree.Loops
         public ExpressionNode Condition;
         public override void ValidateNodeSemantic()
         {
-            if (Condition.ValidateSemantic() is BooleanType)
+            if (!(Condition.ValidateSemantic() is BooleanType)) throw new SemanticException($"{Condition.GenerateCode()} Not a Boolean type");
+            
+            foreach (var sentenceNode in Statements)
             {
-                foreach (var sentenceNode in Statements)
-                {
-                    sentenceNode.ValidateNodeSemantic();
-                }
+                sentenceNode.ValidateNodeSemantic();
             }
-            else
-            {
-                throw new SemanticException("Not a Boolean type");
-            }
-
         }
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            var whileCode = $"while({Condition.GenerateCode()}){{\n";
+            foreach (var sentenceNode in Statements)
+            {
+                whileCode += sentenceNode.GenerateCode() + "\n";
+            }
+            return whileCode + "}";
         }
     }
 }

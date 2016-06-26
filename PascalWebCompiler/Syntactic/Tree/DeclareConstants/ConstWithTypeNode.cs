@@ -27,7 +27,8 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareConstants
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            var constType = TypesTable.Instance.GetType(Type).ToJavaString();
+            return $"public final {constType} {IdNode.GenerateCode()} = {Expression.GenerateCode()};";
         }
     }
 }

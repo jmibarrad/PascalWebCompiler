@@ -35,7 +35,13 @@ namespace PascalWebCompiler.Syntactic.Tree.Functions
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            var callFunctionCode = $"_{FunctionName}(";
+            foreach (var param in Parameters)
+            {
+                callFunctionCode += param.GenerateCode() + ",";
+            }
+            callFunctionCode = callFunctionCode.Remove(callFunctionCode.Length - 1, 1);
+            return callFunctionCode + ");";
         }
     }
 }

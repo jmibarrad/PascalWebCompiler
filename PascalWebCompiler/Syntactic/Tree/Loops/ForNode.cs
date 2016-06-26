@@ -41,9 +41,9 @@ namespace PascalWebCompiler.Syntactic.Tree.Loops
             var forCode = $"for ({counter} = {CounterValue.GenerateCode()}; {counter} < {Condition.GenerateCode()}; {counter}++){{\n";
             foreach (var sentenceNode in Statements)
             {
-                forCode += sentenceNode.GenerateCode();
+                forCode += sentenceNode.GenerateCode()+"\n";
             }
-            return forCode + "\n}\n";
+            return forCode + "}\n";
         }
     }
 }

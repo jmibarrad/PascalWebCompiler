@@ -32,7 +32,14 @@ namespace PascalWebCompiler.Syntactic.Tree.Loops
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            var collection = (ArrayType)TypesTable.Instance.GetType(IdNodeCollection.Value);
+            var collectionBaseType = collection.ToJavaString();
+            var forInCode = $"for({collectionBaseType} {IdNode.GenerateCode()} in {IdNodeCollection.GenerateCode()}){{\n";
+            foreach (var sentenceNode in Statements)
+            {
+                forInCode += sentenceNode.GenerateCode()+"\n";
+            }
+            return forInCode + "}";
         }
     }
 }

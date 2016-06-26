@@ -9,7 +9,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Loops
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            return "continue;";
         }
     }
 }

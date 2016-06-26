@@ -1,4 +1,5 @@
-﻿using PascalWebCompiler.Exceptions;
+﻿using System;
+using PascalWebCompiler.Exceptions;
 using PascalWebCompiler.Semantic;
 using PascalWebCompiler.Semantic.Types;
 
@@ -19,7 +20,9 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareConstants
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            var constType = Expression.ValidateSemantic().ToJavaString();
+
+            return $"public final {constType} {IdNode.GenerateCode()} = {Expression.GenerateCode()};";
         }
     }
 }
