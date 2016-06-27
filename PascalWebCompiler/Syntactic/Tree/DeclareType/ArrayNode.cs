@@ -25,7 +25,13 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
         public override string GenerateCode()
         {
             var arrType = TypesTable.Instance.GetType(ArrayType).ToJavaString();
+
             var arrayCode = $"{arrType} _{TypeName}";
+            //var basicType = SymbolTable.Instance.GetVariable(TypeName);
+            //if (basicType is ArrayType)
+            //{
+                
+            //}
             var arrayInitializeCode = string.Empty;
             Ranges.Reverse();
             foreach (var range in Ranges)

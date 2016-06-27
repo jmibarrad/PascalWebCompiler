@@ -477,7 +477,8 @@ namespace PascalWebCompiler.Lexer
                         }
                         if (!isHtmlEmpty)
                         {
-                            lexeme += _currentSymbol.CurrentSymbol;
+                            if(!char.IsWhiteSpace(_currentSymbol.CurrentSymbol))
+                                lexeme += _currentSymbol.CurrentSymbol;
                             _currentSymbol = Content.NextSymbol();
                         }
                         break;

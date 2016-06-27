@@ -1,5 +1,6 @@
 ﻿using PascalWebCompiler.Exceptions;
 using PascalWebCompiler.Semantic;
+using PascalWebCompiler.Semantic.Types;
 using PascalWebCompiler.Syntactic.Tree.Expression;
 
 namespace PascalWebCompiler.Syntactic.Tree.Declaration
@@ -20,7 +21,11 @@ namespace PascalWebCompiler.Syntactic.Tree.Declaration
         public override string GenerateCode()
         {
             var javaType = TypesTable.Instance.GetType(Type);
-            
+            if (javaType is EnumType) { 
+                BaseType enumType = (EnumType) javaType;
+                return $"{javaType.ToJavaString()} {IdNode.GenerateCode()} = {enumType.ToJavaString()}.{Value.GenerateCode()};";
+            }
+
             return $"{javaType.ToJavaString()} {IdNode.GenerateCode()} = {Value.GenerateCode()};";
         }
     }

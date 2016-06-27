@@ -22,7 +22,7 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
         public override string GenerateCode()
         {
             EnumList.Reverse();
-            var enumCode = $"public enum _{TypeName} {{ \n";
+            var enumCode = $"enum _{TypeName} {{ \n";
             foreach (var enumNode in EnumList)
             {
                 enumCode += "_" + enumNode + ",";

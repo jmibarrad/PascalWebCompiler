@@ -70,6 +70,8 @@
     <Compile Include="Semantic\Types\StringType.cs" />
     <Compile Include="Semantic\Types\TypeDefType.cs" />
     <Compile Include="Semantic\Types\FunctionParamType.cs" />
+    <Compile Include="Syntactic\Tree\GetFormDataNode.cs" />
+    <Compile Include="Syntactic\Tree\ExitNode.cs" />
     <Compile Include="Syntactic\Tree\PrintLineNode.cs" />
     <Compile Include="Syntactic\Tree\DeclareConstants\ConstOnlyDeclareNode.cs" />
     <Compile Include="Syntactic\Tree\DeclareConstants\ConstWithTypeNode.cs" />

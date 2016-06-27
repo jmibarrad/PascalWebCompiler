@@ -37,20 +37,20 @@ namespace PascalWebCompiler
                 }
                 Console.WriteLine("Semantic: Succeed.");
 
-                using (StreamWriter writer = new StreamWriter("C:\\Users\\IBARRA\\Documents\\Pascal\\servlet.java", false))
+                using (StreamWriter writer = new StreamWriter("C:\\Users\\IBARRA\\Documents\\Pascal\\Servlet\\servlet.java", false))
                 {
                     writer.WriteLine(GenerateServlet.InitServletCode(servletCode));
                 }
                 Console.WriteLine("Code Generation: Succeed.");
-
+                System.Diagnostics.Process.Start("C:\\Users\\IBARRA\\Documents\\Pascal\\bat.bat");
             }
             catch (Exception e)
             {
                 Console.WriteLine("\n\n Encountered Error.");
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
+                Console.ReadLine();
             }
-            Console.ReadKey();
         }
     }
 }

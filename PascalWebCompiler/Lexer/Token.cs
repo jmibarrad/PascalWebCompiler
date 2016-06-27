@@ -74,7 +74,9 @@
         KW_CONTINUE,
         KW_TRUE,
         KW_FALSE,
-        PRINTLN
+        PRINTLN,
+        KW_EXIT,
+        KW_GETFORMDATA
     }
 
     public class Token

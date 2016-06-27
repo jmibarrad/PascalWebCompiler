@@ -2,7 +2,6 @@
 {
     public abstract class CaseLiteral
     {
+        public abstract string GenerateCode();
     }
-
-    
 }

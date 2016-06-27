@@ -6,5 +6,6 @@ namespace PascalWebCompiler.Syntactic.Tree.Case
     {
        
         public List<SentenceNode> Statements { get; set; }
+        public abstract string GenerateCode();
     }
 }

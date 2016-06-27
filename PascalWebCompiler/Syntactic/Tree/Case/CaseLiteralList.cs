@@ -7,5 +7,14 @@ namespace PascalWebCompiler.Syntactic.Tree.Case
     {
         public List<NumberNode> LiteralList;
 
+        public override string GenerateCode()
+        {
+            var optionCode = "";
+            foreach (var literallist in LiteralList)
+            {
+                optionCode += $"case {literallist.Value}:\n";
+            }
+            return optionCode;
+        }
     }
 }

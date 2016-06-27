@@ -41,7 +41,9 @@ namespace PascalWebCompiler.Lexer
             { "repeat", TokenType.KW_REPEAT },
             { "true", TokenType.KW_TRUE },
             { "false", TokenType.KW_FALSE },
-            { "println", TokenType.PRINTLN }
+            { "println", TokenType.PRINTLN },
+            { "exit", TokenType.KW_EXIT },
+            { "getformdata", TokenType.KW_GETFORMDATA}
 
         };
 

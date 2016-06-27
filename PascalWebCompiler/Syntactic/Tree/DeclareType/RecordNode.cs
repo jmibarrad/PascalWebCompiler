@@ -20,10 +20,15 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
 
         public override string GenerateCode()
         {
-            var recordCode = $"class {TypeName} (){{\n";
+            var recordCode = $"class _{TypeName}{{\n";
             foreach (var typeDeclarationNode in RecordProperties)
             {
                 recordCode += typeDeclarationNode.GenerateCode();
+                if (typeDeclarationNode.GetBaseType() is RecordType)
+                {
+                    var recordType = (RecordType) typeDeclarationNode.GetBaseType();
+                    recordCode += $"_{recordType.RecordName} _{recordType.RecordName} = new _{recordType.RecordName}();\n";
+                }
             }
             GenerateServlet.OuterCode += $"{recordCode} \n}}\n";
             return string.Empty;

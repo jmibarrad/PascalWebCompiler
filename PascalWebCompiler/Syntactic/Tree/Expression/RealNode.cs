@@ -1,4 +1,5 @@
-﻿using PascalWebCompiler.Semantic;
+﻿using System.Globalization;
+using PascalWebCompiler.Semantic;
 using PascalWebCompiler.Semantic.Types;
 
 namespace PascalWebCompiler.Syntactic.Tree.Expression
@@ -13,7 +14,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Expression
 
         public override string GenerateCode()
         {
-            return $"{Value}";
+            return $"{Value.ToString(CultureInfo.InvariantCulture).Replace(',','.')}";
         }
     }
 }

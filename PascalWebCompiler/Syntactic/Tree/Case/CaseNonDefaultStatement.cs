@@ -4,5 +4,15 @@ namespace PascalWebCompiler.Syntactic.Tree.Case
     {
         public CaseLiteral Literals;
 
+        public override string GenerateCode()
+        {
+
+            var eachStatement = Literals.GenerateCode();
+            foreach (var sentenceNode in Statements)
+            {
+                eachStatement += sentenceNode.GenerateCode() + "\n";
+            }
+            return eachStatement + "break;";
+        }
     }
 }

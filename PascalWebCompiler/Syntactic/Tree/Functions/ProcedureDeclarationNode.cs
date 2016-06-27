@@ -43,7 +43,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Functions
             {
                 declareFunctionCode += sentenceNode.GenerateCode() + "\n";
             }
-            CodeGeneration.GenerateServlet.OuterCode += declareFunctionCode + "}\n";
+            CodeGeneration.GenerateServlet.FunctionCode += declareFunctionCode + "}\n";
             return string.Empty;
         }
     }

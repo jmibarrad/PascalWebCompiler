@@ -27,7 +27,13 @@ namespace PascalWebCompiler.Syntactic.Tree.Case
 
         public override string GenerateCode()
         {
-            throw new System.NotImplementedException();
+            var caseCode = $"switch ({IdNode.GenerateCode()} ){{\n";
+            foreach (var caseStatement in CaseStatements)
+            {
+                caseCode += caseStatement.GenerateCode();
+            }
+            return caseCode + "}\n";
         }
+        
     }
 }

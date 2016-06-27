@@ -10,7 +10,7 @@
 
         public override string GenerateCode()
         {
-            return $"out.println(\"{Content}\");";
+            return $"out.println(\"{Content.Trim('\n')}\");";
         }
     }
 }

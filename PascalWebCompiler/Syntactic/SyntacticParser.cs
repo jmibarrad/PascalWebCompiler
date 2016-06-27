@@ -198,6 +198,20 @@ namespace PascalWebCompiler.Syntactic
                     throw new SyntaxException($"Unexpected Sentence Token: {_currentToken.Lexeme} Expected ';' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
                 }
             }
+            else if (_currentToken.Type == TokenType.KW_EXIT)
+            {
+                _currentToken = _lexer.GetNextToken();
+                var expression = PascalExpression();
+                if (_currentToken.Type == TokenType.EOS)
+                {
+                    _currentToken = _lexer.GetNextToken();
+                    return new ExitNode { ReturnValue = expression };
+                }
+                else
+                {
+                    throw new SyntaxException($"Unexpected Sentence Token: {_currentToken.Lexeme} Expected ';' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                }
+            }
             else
             {
                 throw new SyntaxException($"Unexpected MOTHER EXCEPTION: {_currentToken.Lexeme} Expected ';' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
@@ -1359,6 +1373,40 @@ namespace PascalWebCompiler.Syntactic
                 
 
             }
+
+            else if (_currentToken.Type == TokenType.KW_GETFORMDATA)
+            {
+                _currentToken = _lexer.GetNextToken();
+                if (_currentToken.Type == TokenType.TK_LEFTPARENTHESIS)
+                {
+                    _currentToken = _lexer.GetNextToken();
+                    if (_currentToken.Type == TokenType.STRING_LITERAL)
+                    {
+                        var stringo = _currentToken.Lexeme;
+                        _currentToken = _lexer.GetNextToken();
+                        if (_currentToken.Type == TokenType.TK_RIGHTPARENTHESIS)
+                        {
+                            _currentToken = _lexer.GetNextToken();
+                            return new GetFormDataNode { Parameter = stringo };
+                        }
+                        else
+                        {
+                            throw new SyntaxException(
+                                $"Unexpected Sentence Token: {_currentToken.Lexeme} Expected ';' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                        }
+                    }
+                    else
+                    {
+                        throw new SyntaxException(
+                            $"Unexpected Sentence Token: {_currentToken.Lexeme} Expected ';' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                    }
+                }
+                else
+                {
+                    throw new SyntaxException(
+                        $"Unexpected Sentence Token: {_currentToken.Lexeme} Expected ';' at Column: {_currentToken.Column} Row: {_currentToken.Row}");
+                }
+            }
             else if (_currentToken.Type == TokenType.TK_LEFTPARENTHESIS)
             {
                 _currentToken = _lexer.GetNextToken();
@@ -1412,7 +1460,6 @@ namespace PascalWebCompiler.Syntactic
                 var node = new And { LeftOperand = param, RightOperand = uNode };
                 return MultiplicationExpressionPrime(node);
             }
-
             return param;
         }
 
