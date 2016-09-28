@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using PascalWebCompiler.Exceptions;
 using PascalWebCompiler.Semantic.Types;
 
@@ -7,6 +8,8 @@ namespace PascalWebCompiler.Semantic
     public class TypesTable
     {
         private readonly Dictionary<string, BaseType> _table;
+        public readonly Dictionary<string, Tuple<string, string>> ArrayTable = new Dictionary<string, Tuple<string, string>> ();
+
         private static TypesTable _instance;
 
         private TypesTable()

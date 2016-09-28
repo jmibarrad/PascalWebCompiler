@@ -3,6 +3,7 @@
     public class ArrayType : BaseType
     {
         public string JavaType;
+        public string primitiveType;
         public int InferiorLimit { get; set; }
         public int SuperiorLimit { get; set; }
 
@@ -13,6 +14,7 @@
             if (otherType is ArrayType)
             {
                 var paramArray = (ArrayType)otherType;
+                if (paramArray.JavaType != JavaType) return false;
                 if (InferiorLimit == paramArray.InferiorLimit && SuperiorLimit == paramArray.SuperiorLimit && Type.IsAssignable(paramArray.Type))
                 {
                     return true;
@@ -29,7 +31,7 @@
 
         public override string ToJavaString()
         {
-            return $"_{JavaType}";
+            return $"_{primitiveType}";
         }
     }
 }

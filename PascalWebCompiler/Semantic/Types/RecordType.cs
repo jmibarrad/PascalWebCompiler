@@ -12,7 +12,10 @@ namespace PascalWebCompiler.Semantic.Types
 
         public override bool IsAssignable(BaseType otherType)
         {
-            return otherType is RecordType;
+            if (!(otherType is RecordType))
+                return false;
+
+            return RecordName == ((RecordType)otherType).RecordName;
         }
 
         public override string ToString()

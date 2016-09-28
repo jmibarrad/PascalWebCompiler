@@ -12,6 +12,7 @@ namespace PascalWebCompiler.Syntactic.Tree.Functions
         public string FunctionName;
         public override BaseType ValidateSemantic()
         {
+            var objectsCopyCode = string.Empty;
             var type = SymbolTable.Instance.GetVariable(FunctionName);
             if(!(type is FunctionType)) throw new SemanticException($"{FunctionName} is not a function.");
 
@@ -25,6 +26,12 @@ namespace PascalWebCompiler.Syntactic.Tree.Functions
                 var funcParamType = typeFunction.FunctionParams[index];
                 var isIdNode = parameter is IdNode;
                 if(funcParamType.ByReference && !isIdNode) throw new SemanticException($"{parameter} must be by reference.");
+
+                if (!funcParamType.ByReference)
+                {
+                    
+                }
+
                 if (paramType.IsAssignable(funcParamType.Type))
                 {
                     index++;

@@ -27,6 +27,10 @@ namespace PascalWebCompiler.Syntactic.Tree
                 var enumType = (EnumType) javaType;
                 return $"{ValueIdNode.GenerateCode()} = {enumType.ToJavaString()}.{Value.GenerateCode()};";
             }
+            else if (javaType is ArrayType)
+            {
+                
+            }
             return $"{ValueIdNode.GenerateCode()} = {Value.GenerateCode()};";
         }
     }

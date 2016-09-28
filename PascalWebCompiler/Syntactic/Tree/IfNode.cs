@@ -41,6 +41,8 @@ namespace PascalWebCompiler.Syntactic.Tree
         public override string GenerateCode()
         {
             var javaCode = $"if ( {Condition.GenerateCode()} ) {{ \n";
+            SymbolTable.AddSymbolTable(IfSymbolTable);
+
             foreach (var trueStatement in TrueStatements)
             {
                 javaCode += trueStatement.GenerateCode();
@@ -51,6 +53,7 @@ namespace PascalWebCompiler.Syntactic.Tree
             {
                 javaCode += falseStament.GenerateCode();
             }
+            SymbolTable.RemoveSymbolTable();
 
             return javaCode + '}';
         }

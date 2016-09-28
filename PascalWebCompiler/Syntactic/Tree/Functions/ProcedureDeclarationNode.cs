@@ -32,6 +32,8 @@ namespace PascalWebCompiler.Syntactic.Tree.Functions
 
         public override string GenerateCode()
         {
+            SymbolTable.AddSymbolTable(ProcedureLocalTable);
+
             var declareFunctionCode = $"public void _{ProcedureName} (";
             foreach (var parameter in Parameters)
             {
@@ -44,6 +46,8 @@ namespace PascalWebCompiler.Syntactic.Tree.Functions
                 declareFunctionCode += sentenceNode.GenerateCode() + "\n";
             }
             CodeGeneration.GenerateServlet.FunctionCode += declareFunctionCode + "}\n";
+            SymbolTable.RemoveSymbolTable();
+
             return string.Empty;
         }
     }

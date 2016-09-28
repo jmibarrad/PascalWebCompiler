@@ -30,7 +30,13 @@ namespace PascalWebCompiler.Syntactic.Tree.DeclareType
                     recordCode += $"_{recordType.RecordName} _{recordType.RecordName} = new _{recordType.RecordName}();\n";
                 }
             }
-            GenerateServlet.OuterCode += $"{recordCode} \n}}\n";
+            var constructors = $"public _{TypeName}(){{ \n}}\n";
+            var copyConstructor = $"public _{TypeName}(_{TypeName} originalCopy){{\n";
+            foreach (var typeDeclarationNode in RecordProperties)
+            {
+                copyConstructor += $"this._{typeDeclarationNode.TypeName} = originalCopy._{typeDeclarationNode.TypeName};\n";
+            }
+            GenerateServlet.OuterCode += $"{recordCode}{constructors}{copyConstructor} }}\n}}\n";
             return string.Empty;
         }
 
